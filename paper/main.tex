@@ -660,6 +660,44 @@ $O(1/k)$, suggesting repairability with an additive $O(1/\Delta)$ correction.
   \textup{(ii)}~$f$ is regularity-tight: $f(k,k) = 2k$ with no margin.
 \end{conjecture}
 
+\subsection{A weighted Laplacian intermediate bound}\label{ssec:weighted-laplacian}
+
+In attempting to prove the tight bounds (33, 42, 47), we obtained the
+following intermediate result.
+
+\begin{proposition}[Weighted Laplacian bound]\label{prop:weighted-laplacian}
+  For any connected graph~$G$,
+  \[
+    \Lspec(G)^2 \leq \lambda_{\max}(M),
+  \]
+  where $M$ is the Laplacian of the weighted graph on the same vertex set
+  with edge weights $w_{ij} = d_i + d_j$ for each $\{i,j\} \in E$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+  Let $x$ be the eigenvector of~$L(G)$ with eigenvalue~$\Lspec(G)$, normalized
+  so that $\|x\|_2 = 1$. The eigenequation gives
+  $\Lspec(G)\, x_v = d_v x_v - \sum_{u \sim v} x_u$. Squaring both sides:
+  \[
+    \Lspec(G)^2\, x_v^2 = \Bigl(d_v x_v - \sum_{u \sim v} x_u\Bigr)^{\!2}.
+  \]
+  Applying Cauchy--Schwarz to $\bigl(\sum_{u \sim v} x_u\bigr)^2 \leq
+  d_v \sum_{u \sim v} x_u^2$ in the expanded square and summing over all
+  vertices yields $\Lspec(G)^2 \leq x^T M\, x$, where $M$ has entries
+  \[
+    M_{vv} = \sum_{u \sim v} (d_v + d_u), \qquad
+    M_{vu} = -(d_v + d_u) \;\text{ if } u \sim v.
+  \]
+  The Rayleigh quotient bound gives $x^T M\, x \leq \lambda_{\max}(M)$.
+\end{proof}
+
+\begin{remark}\label{rem:weighted-laplacian-gap}
+  Proposition~\ref{prop:weighted-laplacian} implies that proving Bound~42,
+  for example, reduces to showing
+  $\lambda_{\max}(M) \leq \max_{(i,j) \in E}(d_i^2 + d_j^2 + 2m_i \cdot m_j)$.
+  This second inequality remains open.
+\end{remark}
+
 
 %% =============================================================================
 %% 6. CLASSIFICATION OF REMAINING BOUNDS
@@ -688,6 +726,31 @@ The \textsc{super-safe} bounds include all hub-visible bounds (14, 16, 30).
 The three \textsc{tight} bounds achieve exact equality on~$P_3$ and complete
 bipartite graphs, making them the most promising candidates for a proof.
 
+\subsection{Exhaustive verification of the tight bounds}\label{ssec:exhaustive}
+
+We performed exhaustive computational verification of the three tight
+bounds (33, 42, 47) on every connected graph with $n \leq 10$ vertices.
+The total number of connected graphs tested was $11{,}988{,}768$
+($11{,}117$ for $n = 8$; $261{,}080$ for $n = 9$; $11{,}716{,}571$ for
+$n = 10$).  Zero violations were found for any of the three bounds.
+
+\begin{theorem}[Finite verification]\label{thm:finite-verification}
+  Bounds~33, 42, and~47 from~\cite{BHS2006} hold for all connected graphs
+  with at most~$10$ vertices.
+\end{theorem}
+
+Among all graphs tested, the tightest instances---those achieving exact
+equality in all three bounds simultaneously---are the complete bipartite
+graphs $K_{a,b}$.  On regular bipartite graphs, the vertex and edge
+parameters satisfy $d_i = d_j$ and $m_i = m_j = d_i$, causing the bound
+formulas to collapse to $\Lspec(G) = 2\Delta$, which is the known
+spectral radius of $K_{a,a}$.
+
+Windmill graphs $W(k,3)$ (the friendship graphs) provide asymptotically
+tight instances for Bound~42: the relative gap satisfies
+$\bigl(B_{42} - \Lspec\bigr)/\Lspec \sim \sqrt{3}/k \to 0$ as
+$k \to \infty$.
+
 
 %% =============================================================================
 %% 7. DISCUSSION
@@ -712,6 +775,16 @@ Bounds~11/13: gap diverges (irreparable).
 Bound~40: transient window (max gap~$1.74$).
 Bound~45: gap $\to 0$ as $1/(2k)$ (repairable).
 Bound~48: degenerate $P_3$ case only.
+
+\paragraph{Proof attempts for tight bounds.}
+We attempted to prove the three tight bounds (33, 42, 47) using Rayleigh
+quotient methods, Schur complement analysis, Gershgorin circles, and degree
+sequence constraints.  While a key intermediate result was obtained
+(Proposition~\ref{prop:weighted-laplacian}), complete proofs remain elusive.
+The fundamental obstacle is that standard spectral techniques do not
+naturally produce edge-maximum bounds involving average neighbor degrees:
+the Rayleigh quotient $x^T L x / x^T x$ yields vertex-sum expressions,
+whereas edge-type bounds require converting these into edge-maximum form.
 
 \paragraph{Open questions.}
 (a)~Can any of the 33~remaining bounds be proved, especially the

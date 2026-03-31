@@ -27,8 +27,9 @@ G.~Caporossi, P.~Hansen, Variable neighborhood search for extremal graphs. 1.
 \bibitem{Ghebleh2024}
 M.~Ghebleh, S.~Al-Yakoob, A.~Kanso, D.~Stevanovi\'{c}, Refuting conjectured
   upper bounds for the largest {L}aplacian eigenvalue of graphs, Discrete
-  Applied MathematicsPublished online 2025. Available at
-  \url{https://arxiv.org/abs/2403.18429} (2025).
+  Applied Mathematics 380, preprint: arXiv:2403.18429 (2024) (2026).
+\newblock \href {https://doi.org/10.1016/j.dam.2025.10.047}
+  {\path{doi:10.1016/j.dam.2025.10.047}}.
 
 \bibitem{Wagner2021}
 A.~Z. Wagner, Constructions in combinatorics via neural networks, arXiv

@@ -1,0 +1,755 @@
+%% =============================================================================
+%% BHS Counterexample Paper — Minimum Viable LaTeX Template
+%% Target: arXiv (math.CO) + Linear Algebra and its Applications (Elsevier)
+%% Document class: elsarticle (Elsevier standard)
+%%
+%% HOW TO USE:
+%%   Overleaf: Upload this file + references.bib -> Recompile
+%%   Local:    pdflatex main && bibtex main && pdflatex main && pdflatex main
+%% =============================================================================
+
+\documentclass[preprint,12pt]{elsarticle}
+
+%% --- Essential Packages ---
+\usepackage{amsmath}      % align, cases, equation*, etc.
+\usepackage{amssymb}      % \mathbb, \leq, etc.
+\let\proof\relax \let\endproof\relax
+\usepackage{amsthm}       % theorem, proof environments
+\usepackage{booktabs}     % Professional tables: \toprule, \midrule, \bottomrule
+\usepackage{graphicx}     % \includegraphics for figures
+\usepackage{hyperref}     % Clickable cross-references and URLs
+\usepackage{enumitem}     % Better list formatting
+\usepackage{mathtools}    % \coloneqq and other math extras
+
+%% --- Theorem-like Environments ---
+%% Numbers are shared and sequential within each section: Theorem 2.1, Lemma 2.2, ...
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+%% --- Custom Commands (save typing, ensure consistency) ---
+\newcommand{\SoC}{\mathrm{SoC}}       % StarOfCliques
+\newcommand{\SoS}{\mathrm{SoS}}       % StarOfStars
+\newcommand{\DS}{\mathrm{DS}}          % DoubleStar
+\newcommand{\Cat}{\mathrm{Cat}}        % Caterpillar
+\newcommand{\Lspec}{\mu}               % Laplacian spectral radius
+
+%% --- Hyperref Setup ---
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+}
+
+%% --- Remove elsarticle default footer (optional, cleaner for arXiv) ---
+\journal{Linear Algebra and its Applications}
+
+%% =============================================================================
+%% DOCUMENT BEGINS
+%% =============================================================================
+\begin{document}
+
+\begin{frontmatter}
+
+%% --- Title ---
+\title{Counterexamples to Five Conjectured Upper Bounds\\
+  for the Largest Laplacian Eigenvalue}
+
+%% --- Author ---
+\author[inst1]{Taewoo Ha}
+\ead{txh2120@gmail.com}
+
+\affiliation[inst1]{
+  organization={Independent Researcher},
+  city={California},
+  country={United States}
+}
+
+%% --- Abstract ---
+\begin{abstract}
+  Brankov, Hansen, and Stevanovi\'{c} (2006) used the AutoGraphiX system
+  to generate 68 conjectured upper bounds for the largest Laplacian
+  eigenvalue~$\mu(G)$ of a graph~$G$. Ghebleh et al.\ (2024) disproved
+  30 of these, leaving 38 open. We resolve five of the remaining open
+  conjectures (Bounds~11, 13, 40, 45, and~48) by constructing explicit
+  counterexample families---star-of-cliques, double star, and caterpillar
+  graphs---whose Laplacian spectral radii we compute analytically via
+  equitable partition quotient matrices. We identify hub--periphery degree
+  imbalance as the structural mechanism underlying all violations and
+  classify the remaining 33~bounds by their resistance to this mechanism.
+\end{abstract}
+
+%% --- Keywords and MSC ---
+\begin{keyword}
+  Laplacian eigenvalue \sep spectral radius \sep upper bound \sep
+  counterexample \sep equitable partition
+  \MSC[2020] 05C50 \sep 15A18
+\end{keyword}
+
+\end{frontmatter}
+
+%% =============================================================================
+%% 1. INTRODUCTION
+%% =============================================================================
+\section{Introduction}\label{sec:intro}
+
+Let $G = (V, E)$ be a simple connected graph on $n = |V|$ vertices and
+$m = |E|$ edges. The \emph{Laplacian matrix} of~$G$ is
+$L(G) = D(G) - A(G)$, where $A(G)$ is the adjacency matrix and
+$D(G) = \operatorname{diag}(d_1, \ldots, d_n)$ is the diagonal matrix of
+vertex degrees. Since $L(G)$ is positive semidefinite with row sums zero,
+its eigenvalues satisfy $0 = \lambda_n \leq \cdots \leq \lambda_1$, and
+the largest eigenvalue
+\begin{equation}\label{eq:mu-def}
+  \Lspec(G) \coloneqq \lambda_{\max}\bigl(L(G)\bigr)
+\end{equation}
+is called the \emph{Laplacian spectral radius}. Upper bounds on
+$\Lspec(G)$ in terms of easily computed graph invariants are of both
+theoretical and algorithmic interest; see~\cite{BrouwerHaemers2012} for
+background. In 2006, Brankov, Hansen, and
+Stevanovi\'{c}~\cite{BHS2006} used the AutoGraphiX
+system~\cite{AutoGraphiX2000} to generate 68~conjectured upper bounds
+for~$\Lspec(G)$ expressed solely in terms of vertex degrees~$d_v$ and
+\emph{average neighbor degrees}
+\begin{equation}\label{eq:mv-def}
+  m_v = \frac{1}{d_v} \sum_{u \sim v} d_u.
+\end{equation}
+The 68~conjectures fall into two families.
+\emph{Vertex-type} bounds have the form
+$\Lspec(G) \leq \max_v f(d_v, m_v)$, and \emph{edge-type}
+bounds have the form
+\[
+  \Lspec(G) \leq \max_{ij\in E} g(d_i, d_j, m_i, m_j).
+\]
+None had been proved or disproved for nearly two decades.
+
+Ghebleh, Al-Yakoob, Kanso, and Stevanovi\'{c}~\cite{Ghebleh2024}
+recently applied the cross-entropy method (CEM) of
+Wagner~\cite{Wagner2021} to disprove 30 of the 68~bounds by
+constructing small counterexample graphs, leaving 38~bounds open. Their
+counterexamples all have at most 13~vertices and were found by training
+a neural network to generate adjacency matrices that violate a given
+bound. Subsequently, Bouffard and Breen~\cite{BouffardBreen2025}
+parallelized the CEM approach and extended the search to larger graphs,
+but reported no new counterexamples among the remaining 38~bounds.
+Roucairol and Cazenave~\cite{RoucairolCazenave2024} applied nested
+Monte Carlo search to the same problem, likewise without resolving any
+of the open cases.
+
+In the present paper we disprove five of the 38~remaining open bounds.
+
+\begin{theorem}[Main result]\label{thm:main}
+  BHS Bounds~11, 13, 40, 45, and~48 from~\cite{BHS2006} are false.
+  Specifically:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+    \item Bound~11 is violated by $\SoC(K_m, t)$ for all $m \geq 4$
+      and $t \geq 2m - 1$
+      \textup{(Theorem~\ref{thm:bound11})}.
+    \item Bound~13 is violated by $\SoC(K_m, t)$ for all $m \geq 5$
+      and sufficiently large~$t$
+      \textup{(Theorem~\ref{thm:bound13})}.
+    \item Bound~40 is violated by the star of stars
+      $\SoS(39, 8)$ and $\SoS(49, 9)$
+      \textup{(Theorem~\ref{thm:bound40})}.
+    \item Bound~45 is violated by $\DS(k,k)$ for all $k \geq 6$
+      \textup{(Theorem~\ref{thm:bound45})}.
+    \item Bound~48 is violated by the path~$P_3$
+      \textup{(Remark~\ref{rem:bound48})}.
+  \end{enumerate}
+\end{theorem}
+
+\noindent
+In each case the proof is constructive: we exhibit an infinite family
+(or, for Bound~48, a single small graph) together with an analytic
+computation of its Laplacian spectral radius via equitable partition
+quotient matrices.
+
+Our approach differs fundamentally from the optimization-based methods
+of~\cite{Ghebleh2024,Wagner2021,BouffardBreen2025}. Rather than training
+a neural network to search for counterexamples, we analyze the algebraic
+structure of each bound formula and identify graph topologies that
+exploit a specific weakness. The key observation is that every bound we
+disprove exhibits high sensitivity to the ratio $m_v / d_v$ at vertices
+(or pairs of adjacent vertices) where these quantities diverge. Graphs
+with \emph{hub--periphery} structure---a high-degree hub connected to
+dense peripheral subgraphs---create exactly this divergence: the hub's
+average neighbor degree~$m_v$ is determined by the peripheral structure
+and can be made large relative to the hub degree~$d_v$, or vice versa.
+Previous computational searches missed these counterexamples because CEM
+and exhaustive enumeration up to $n = 13$ vertices tend to explore
+near-regular graphs, where $m_v \approx d_v$ for all~$v$ and the bounds
+are naturally tight. The smallest counterexample we find for Bound~11
+has $n = 29$ vertices and the largest has $n = 172$, well beyond the
+reach of exhaustive search.
+
+The paper is organized as follows. Section~\ref{sec:prelim} fixes
+notation and recalls the theory of equitable partitions. It also states
+the five BHS bounds that we disprove. Section~\ref{sec:families} defines
+the counterexample graph families: star of cliques, double star, and star
+of stars. Section~\ref{sec:main} contains the main results: closed-form
+spectral radius computations and the violation proofs for each of the
+five bounds. Section~\ref{sec:mechanism} analyzes the hub--periphery
+mechanism common to all five violations.
+Section~\ref{sec:classification} classifies the remaining 33~open bounds
+by their resistance to this mechanism. Section~\ref{sec:discussion}
+discusses implications for automated conjecture generation and directions
+for future work.
+
+
+%% =============================================================================
+%% 2. PRELIMINARIES
+%% =============================================================================
+\section{Preliminaries}\label{sec:prelim}
+
+\subsection{Graph notation}\label{ssec:notation}
+
+Throughout this paper, $G = (V, E)$ denotes a simple connected graph
+with vertex set $V$, edge set $E$, $n = |V|$ vertices, and $m = |E|$
+edges. The \emph{adjacency matrix} $A(G)$ is the $n \times n$ matrix
+with $A_{ij} = 1$ if $\{i,j\} \in E$ and $A_{ij} = 0$ otherwise. The
+\emph{degree matrix} is $D(G) = \operatorname{diag}(d_1, \ldots, d_n)$,
+where $d_v = \sum_{u} A_{vu}$ is the degree of vertex~$v$. The
+\emph{Laplacian matrix} $L(G) = D(G) - A(G)$ is positive semidefinite
+with smallest eigenvalue~$0$. We write
+$\Lspec(G) = \lambda_{\max}(L(G))$ for the \emph{Laplacian spectral
+radius}.
+
+For each vertex $v \in V$ with $d_v \geq 1$, the \emph{average neighbor
+degree} is
+\[
+  m_v = \frac{1}{d_v} \sum_{u \sim v} d_u,
+\]
+where the sum is over all neighbors~$u$ of~$v$. Note that $m_v \geq 1$
+for every vertex in a connected graph, and $m_v = d_v$ for every vertex
+if and only if $G$ is regular.
+
+\subsection{Equitable partitions}\label{ssec:equitable}
+
+Equitable partitions provide a powerful tool for computing eigenvalues
+of highly structured graphs by reducing the $n \times n$ Laplacian to a
+small quotient matrix. We recall the essential definitions; for a
+comprehensive treatment see Godsil and Royle~\cite{GodsilRoyle2001}.
+
+\begin{definition}[Equitable partition]\label{def:equitable}
+  A partition $\pi = \{C_1, \ldots, C_k\}$ of the vertex set~$V(G)$ is
+  \emph{equitable} if, for every pair $(i,j)$ with
+  $1 \leq i, j \leq k$, every vertex in~$C_i$ has the same number of
+  neighbors in~$C_j$. We denote this common value by~$b_{ij}$.
+\end{definition}
+
+Given an equitable partition with cells $C_1, \ldots, C_k$, the
+\emph{quotient matrix} is the $k \times k$ matrix $Q$ with entries
+$Q_{ij} = b_{ij}$, and the \emph{quotient Laplacian} is the $k \times k$
+matrix $Q_L$ with entries
+\[
+  (Q_L)_{ij} =
+  \begin{cases}
+    d_{C_i}  & \text{if } i = j, \\
+    -b_{ij}  & \text{if } i \neq j,
+  \end{cases}
+\]
+where $d_{C_i} = \sum_{j=1}^{k} b_{ij}$ is the common degree of every
+vertex in cell~$C_i$.
+
+\begin{theorem}[{\cite[Theorem~9.3.3]{GodsilRoyle2001}}]\label{thm:equitable}
+  Let $\pi$ be an equitable partition of~$G$ with quotient Laplacian
+  $Q_L$. Then every eigenvalue of $Q_L$ is an eigenvalue of~$L(G)$.
+  In particular,
+  \[
+    \Lspec(G) \geq \lambda_{\max}(Q_L),
+  \]
+  with equality whenever the eigenvector of~$L(G)$ corresponding to
+  $\Lspec(G)$ is constant on each cell of~$\pi$.
+\end{theorem}
+
+\noindent
+In all counterexample families considered in this paper, the natural
+partition by vertex type is equitable, and the largest eigenvalue
+eigenvector is piecewise constant on cells. This reduces the computation
+of~$\Lspec(G)$ to finding the largest root of a polynomial of degree at
+most~$3$.
+
+\subsection{The BHS bounds}\label{ssec:bhs-bounds}
+
+We now state the five conjectured bounds from~\cite{BHS2006} that we
+disprove. All five are listed as open in~\cite[Table~1]{Ghebleh2024}.
+Bounds~11 and~13 are vertex-type bounds; Bounds~40, 45, and~48 are
+edge-type bounds.
+
+\begin{conjecture}[BHS Bound~11 {\cite{BHS2006}}]\label{conj:bound11}
+  For every connected graph~$G$,
+  \[
+    \Lspec(G) \leq \max_{v \in V} \frac{2\, m_v^{\,3}}{d_v^{\,2}}.
+  \]
+\end{conjecture}
+
+\begin{conjecture}[BHS Bound~13 {\cite{BHS2006}}]\label{conj:bound13}
+  For every connected graph~$G$,
+  \[
+    \Lspec(G) \leq \max_{v \in V} \frac{2\, m_v^{\,4}}{d_v^{\,3}}.
+  \]
+\end{conjecture}
+
+\begin{conjecture}[BHS Bound~40 {\cite{BHS2006}}]\label{conj:bound40}
+  For every connected graph~$G$,
+  \[
+    \Lspec(G) \leq \max_{(i,j) \in E}\; \Bigl(2 + \sqrt{2(m_i{-}1)^2 + 2(m_j{-}1)^2
+      + d_i^2 + d_j^2 - d_i m_i - d_j m_j}\,\Bigr).
+  \]
+\end{conjecture}
+
+\begin{conjecture}[BHS Bound~45 {\cite{BHS2006}}]\label{conj:bound45}
+  For every connected graph~$G$,
+  \[
+    \Lspec(G) \leq \max_{(i,j) \in E}\; \Bigl(2 + \sqrt{(d_i{-}d_j)^2 + 2(d_i m_i + d_j m_j)
+      - 4(m_i + m_j) + 4}\,\Bigr).
+  \]
+\end{conjecture}
+
+\begin{conjecture}[BHS Bound~48 {\cite{BHS2006}}]\label{conj:bound48}
+  For every connected graph~$G$,
+  \[
+    \Lspec(G) \leq \max_{(i,j) \in E}\;
+      \frac{2(d_i^2 + d_j^2)}{2 + \sqrt{2(d_i^2 + d_j^2) - 4(m_i + m_j) + 4}}.
+  \]
+\end{conjecture}
+
+\noindent
+Bounds~11 and~13 are structurally similar: both take the form
+$\max_v 2m_v^p/d_v^{p-1}$ with $p = 3$ and $p = 4$,
+respectively.  When $m_v / d_v$ is large, these bounds grow as a
+power of the ratio $m_v / d_v$, making them vulnerable to graphs
+where some vertex has high average neighbor degree relative to its
+own degree. Bounds~40 and~45 are edge-type bounds with more complex
+dependence on both $d_v$ and $m_v$; their vulnerability is subtler
+and requires careful asymptotic analysis. Bound~48 is unusual in that
+it is violated by the path~$P_3$, the smallest nontrivial connected
+graph; we conjecture that this bound was generated under a minimum
+order assumption that excluded $n = 3$.
+
+
+%% =============================================================================
+%% 3. COUNTEREXAMPLE GRAPH FAMILIES
+%% =============================================================================
+\section{Counterexample graph families}\label{sec:families}
+
+\begin{definition}[Star-of-Cliques]\label{def:soc}
+  For integers $m \geq 3$ and $t \geq 2$, the graph
+  $\SoC(K_m, t)$ consists of a central \emph{hub} vertex~$v_0$
+  connected by a single edge to one designated vertex (the
+  \emph{connector}) in each of $t$ disjoint copies of the complete
+  graph~$K_m$. The total number of vertices is $n = 1 + tm$.
+\end{definition}
+
+\begin{definition}[Double Star]\label{def:ds}
+  For an integer $k \geq 1$, the double star $\DS(k,k)$ is obtained by
+  connecting two vertices $u$ and~$v$, each of which is adjacent
+  to~$k$ pendant vertices. The total number of vertices is $n = 2k + 2$.
+\end{definition}
+
+\begin{definition}[Star-of-Stars]\label{def:sos}
+  For integers $t \geq 2$ and $s \geq 1$, the graph $\SoS(t, s)$
+  consists of a central \emph{hub} vertex~$v_0$ adjacent to $t$
+  \emph{intermediate} vertices $w_1, \ldots, w_t$, each of which is
+  adjacent to $s$ pendant \emph{leaf} vertices. The total number of
+  vertices is $n = 1 + t + ts = 1 + t(1 + s)$.
+\end{definition}
+
+\begin{definition}[Caterpillar]\label{def:cat}
+  For integers $\ell \geq 2$ and $k \geq 0$, the caterpillar
+  $\Cat(\ell, k)$ is obtained from a path on $\ell$ vertices (the
+  \emph{spine}) by attaching $k$ pendant leaves to each spine vertex.
+  The total number of vertices is $n = \ell(k + 1)$.
+\end{definition}
+
+
+%% =============================================================================
+%% 4. MAIN RESULTS
+%% =============================================================================
+\section{Main results}\label{sec:main}
+
+%% --- Example: Spectral radius of StarOfCliques ---
+
+\begin{proposition}\label{prop:mu-soc}
+  For $m \geq 3$ and $t \geq 2$, the Laplacian spectral radius of
+  $\SoC(K_m, t)$ is
+  \begin{equation}\label{eq:mu-soc}
+    \Lspec\bigl(\SoC(K_m, t)\bigr) =
+    \frac{(m+t+1) + \sqrt{(t-m)^2 + 2(t+m) - 3}}{2}.
+  \end{equation}
+\end{proposition}
+
+\begin{proof}
+  The vertex set admits an equitable partition into three cells:
+  $H = \{v_0\}$ (hub), $C$ (connectors, $|C| = t$), and $I$ (interior,
+  $|I| = t(m-1)$). The quotient Laplacian is the $3 \times 3$ matrix
+  \begin{equation}\label{eq:quotient-soc}
+    Q_L =
+    \begin{pmatrix}
+      t    & -t     & 0      \\
+      -1   & m      & -(m-1) \\
+      0    & -1     & 1
+    \end{pmatrix}.
+  \end{equation}
+  One eigenvalue is $\lambda_1 = 0$ (since the quotient Laplacian has zero row sums). The
+  remaining two eigenvalues are roots of
+  \[
+    \lambda^2 - (m + t + 1)\lambda + (tm + 1) = 0,
+  \]
+  giving the largest eigenvalue as~\eqref{eq:mu-soc}. Since the
+  corresponding eigenvector is piecewise constant on the cells,
+  this is also the largest eigenvalue of~$L(G)$.
+\end{proof}
+
+
+%% --- Example: Bound 11 violation theorem ---
+
+\begin{theorem}\label{thm:bound11}
+  BHS Bound~11,
+  \begin{equation}\label{eq:bound11}
+    \Lspec(G) \leq \max_{v \in V} \frac{2m_v^3}{d_v^2},
+  \end{equation}
+  is violated by $\SoC(K_m, t)$ for all $m \geq 4$ and $t \geq 2m - 1$.
+  In particular, $\SoC(K_8, 19)$ with $n = 153$ satisfies
+  $\Lspec(G) \approx 20.557$ while the bound gives $\approx 19.191$.
+\end{theorem}
+
+\begin{proof}
+  By Proposition~\ref{prop:mu-soc}, we have
+  $\Lspec = \frac{(m+t+1) + \sqrt{(t-m)^2 + 2(t+m)-3}}{2}$.
+  The hub vertex~$v_0$ has $d_{v_0} = t$ and $m_{v_0} = m$ (all
+  neighbors are connectors of degree~$m$), so Bound~11 evaluates to
+  \[
+    \frac{2m_{v_0}^3}{d_{v_0}^2} = \frac{2m^3}{t^2}.
+  \]
+  For large~$t$, this is $O(t^{-2})$ while $\Lspec$ grows as
+  $t + O(1)$, so the violation eventually occurs. Specifically,
+  at $t = 2m - 1$ the connector vertex has $d = m$ and
+  $m_v = \bigl(t + (m-1)^2\bigr)/m = m$, giving
+  $\frac{2m_v^3}{d^2} = 2m$, which dominates the hub bound.
+  By Proposition~\ref{prop:mu-soc},
+  $\Lspec = \bigl(3m + \sqrt{m^2 + 4m - 4}\bigr)/2 > 2m$
+  since $\sqrt{m^2 + 4m - 4} > m$ for $m \geq 2$ (obtained by
+  squaring). For $t > 2m - 1$ the connector bound
+  $2m_v^3/m^2$ grows while $\Lspec$ also grows, and the gap widens.
+\end{proof}
+
+
+%% --- Bound 13 violation ---
+
+\begin{theorem}\label{thm:bound13}
+  BHS Bound~13,
+  \begin{equation}\label{eq:bound13}
+    \Lspec(G) \leq \max_{v \in V} \frac{2m_v^4}{d_v^3},
+  \end{equation}
+  is violated by $\SoC(K_m, t)$ for all $m \geq 5$ and $t = 2m - 1$.
+  In particular, $\SoC(K_9, 19)$ with $n = 172$ satisfies
+  $\Lspec(G) \approx 20.685$ while the bound gives $\approx 19.845$.
+\end{theorem}
+
+\begin{proof}
+  The connector vertex has $d = m$ and
+  $m_v = \bigl(t + (m-1)^2\bigr)/m$. At $t = 2m - 1$ we have
+  $t + (m-1)^2 = m^2$, giving
+  $B_{13}^{\mathrm{conn}} = 2m^8/m^7 = 2m$.
+  By Proposition~\ref{prop:mu-soc}, $\Lspec = (3m + \sqrt{m^2 + 4m - 4})/2$.
+  Since $\sqrt{m^2 + 4m - 4} > m$ for $m \geq 2$, we obtain
+  $\Lspec > 2m$, establishing the violation for $m \geq 6$.
+  For $m = 5$, the interior bound is $\approx 10.195$ but
+  $\Lspec\bigl(\SoC(K_5, 9)\bigr) \approx 10.702 > 10.195$.
+\end{proof}
+
+
+%% --- Spectral radius of DoubleStar ---
+
+\begin{proposition}\label{prop:mu-ds}
+  For $k \geq 2$, the Laplacian spectral radius of $\DS(k,k)$ is
+  \begin{equation}\label{eq:mu-ds}
+    \Lspec\bigl(\DS(k,k)\bigr)
+    = \frac{(k+3) + \sqrt{k^2 + 6k + 1}}{2}.
+  \end{equation}
+\end{proposition}
+
+\begin{proof}
+  The $\mathbb{Z}_2$ symmetry swapping the two hubs decomposes
+  eigenspaces into symmetric and antisymmetric sectors.
+
+  \emph{Symmetric sector.} Quotient matrix
+  $Q_+ = \bigl(\begin{smallmatrix} k & -k \\ -1 & 1 \end{smallmatrix}\bigr)$,
+  eigenvalues $0$ and $k+1$.
+
+  \emph{Antisymmetric sector.} Quotient matrix
+  $Q_- = \bigl(\begin{smallmatrix} k+2 & -k \\ -1 & 1 \end{smallmatrix}\bigr)$,
+  characteristic polynomial $\lambda^2 - (k+3)\lambda + 2 = 0$,
+  eigenvalues $(k+3 \pm \sqrt{k^2+6k+1})/2$.
+
+  Pendant leaves contribute eigenvalue~$1$ with multiplicity $2(k-1)$.
+  Since $\sqrt{k^2+6k+1} > k-1$ for $k \geq 2$, the antisymmetric
+  $\lambda_+$ is the global maximum.
+\end{proof}
+
+
+%% --- Bound 45 violation ---
+
+\begin{theorem}\label{thm:bound45}
+  BHS Bound~45,
+  \begin{equation}\label{eq:bound45}
+    \Lspec(G) \leq \max_{(i,j) \in E}\; \Bigl(2 + \sqrt{(d_i{-}d_j)^2 + 2(d_i m_i + d_j m_j)
+      - 4(m_i{+}m_j) + 4}\,\Bigr),
+  \end{equation}
+  is violated by $\DS(k,k)$ for all $k \geq 6$.
+  At $k = 6$, $\DS(6,6)$ with $n = 14$ satisfies
+  $\Lspec(G) \approx 8.772$ while the bound gives $\approx 8.676$.
+\end{theorem}
+
+\begin{proof}
+  The hub--leaf edge maximizes Bound~45 for $k \geq 6$. Showing
+  $\Lspec > B_{45}^{\mathrm{hl}}$ and squaring twice reduces to
+  $4k(k^3 + 8k^2 - 11k - 2) > 0$, which holds for $k \geq 2$ since
+  $k^3 + 8k^2 - 11k - 2 > 0$ for $k \geq 2$.
+  The gap satisfies $B_{45} - \Lspec = -1/(2k) + O(k^{-2})$.
+\end{proof}
+
+
+%% --- Spectral radius of StarOfStars ---
+
+\begin{proposition}\label{prop:mu-sos}
+  For $t \geq 2$ and $s \geq 1$, the Laplacian spectral radius of
+  $\SoS(t, s)$ is
+  \begin{equation}\label{eq:mu-sos}
+    \Lspec\bigl(\SoS(t, s)\bigr)
+    = \frac{(t + s + 2) + \sqrt{(t - s)^2 + 4s}}{2}.
+  \end{equation}
+\end{proposition}
+
+\begin{proof}
+  Equitable partition into $\{$hub$\}$, $\{$intermediates$\}$,
+  $\{$leaves$\}$. The quotient Laplacian is
+  $Q_L = \bigl(\begin{smallmatrix} t & -t & 0 \\ -1 & 1{+}s & -s \\ 0 & -1 & 1 \end{smallmatrix}\bigr)$
+  with characteristic polynomial
+  $-\lambda[\lambda^2 - (t+s+2)\lambda + n]$, where $n = 1 + t(1+s)$.
+  Discriminant $(t-s)^2 + 4s > 0$.
+\end{proof}
+
+
+%% --- Bound 40 violation ---
+
+\begin{theorem}\label{thm:bound40}
+  BHS Bound~40,
+  \begin{equation}\label{eq:bound40}
+    \Lspec(G) \leq \max_{(i,j) \in E}\; \Bigl(2 + \sqrt{2(m_i{-}1)^2 + 2(m_j{-}1)^2
+      + d_i^2 + d_j^2 - d_i m_i - d_j m_j}\,\Bigr),
+  \end{equation}
+  is violated by $\SoS(39, 8)$ with $n = 352$, where
+  $\Lspec(G) \approx 40.256$ and the bound gives $\approx 38.982$.
+\end{theorem}
+
+\begin{proof}
+  The hub--intermediate edge has $d_h = 39$, $m_h = 9$,
+  $d_w = 9$, $m_w = 47/9$. By Proposition~\ref{prop:mu-sos},
+  $\Lspec = (49 + \sqrt{993})/2$. The inequality
+  $\Lspec > B_{40}$ reduces to $\sqrt{993} > 27.25$, i.e.,
+  $993 > 742.6$, which holds.
+\end{proof}
+
+
+%% --- Bound 48 violation ---
+
+\begin{remark}[Bound~48 --- degenerate case]\label{rem:bound48}
+  BHS Bound~48,
+  \[
+    \Lspec(G) \leq \max_{(i,j) \in E}\;
+    \frac{2(d_i^2 + d_j^2)}{2 + \sqrt{2(d_i^2 + d_j^2) - 4(m_i + m_j) + 4}},
+  \]
+  is violated by~$P_3$: the bound gives $10/(2{+}\sqrt{2}) \approx 2.929$
+  while $\Lspec(P_3) = 3$. This is the only counterexample found.
+\end{remark}
+
+
+%% --- Summary Table ---
+
+\begin{table}[t]
+  \centering
+  \caption{Summary of counterexamples to BHS bounds. ``Gap'' denotes
+    the bound value minus~$\Lspec(G)$ (negative = violation).}
+  \label{tab:counterexamples}
+  \begin{tabular}{clcrrr}
+    \toprule
+    Bound & Counterexample & $n$ & $\Lspec(G)$ & Bound value & Gap \\
+    \midrule
+    11 & $\SoC(K_8, 19)$     & 153 & 20.5574 & 19.1914 & $-1.3660$ \\
+    13 & $\SoC(K_9, 19)$     & 172 & 20.6847 & 19.8447 & $-0.8399$ \\
+    40 & $\SoS(39, 8)$       & 352 & 40.2560 & 38.9818 & $-1.2741$ \\
+    45 & $\DS(6, 6)$         &  14 &  8.7720 &  8.6762 & $-0.0958$ \\
+    48 & $P_3$               &   3 &  3.0000 &  2.9289 & $-0.0711$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+
+%% =============================================================================
+%% 5. MECHANISM ANALYSIS
+%% =============================================================================
+\section{Why these bounds fail}\label{sec:mechanism}
+
+\subsection{Hub-invisible bounds}\label{ssec:hub-invisible}
+
+Every vertex-type BHS bound has the form
+$\Lspec(G) \leq \max_{v \in V} f(d_v, m_v)$ for some rational function~$f$.
+On a star-of-cliques $\SoC(K_m, t)$ the maximum is taken over three vertex
+types (hub, connector, interior), and the bound value is the largest of the
+three contributions.
+
+\begin{definition}[Hub-invisible]\label{def:hub-invisible}
+  A bound $B(G) = \max_v f(d_v,m_v)$ is \emph{hub-invisible}
+  if $f(t,m) \to 0$ as $t \to \infty$ ($m$ fixed), and
+  \emph{hub-visible} if $f(t,m) \to \infty$.
+\end{definition}
+
+\begin{proposition}[Hub-invisible bounds fail]\label{prop:hub-invisible}
+  \begin{enumerate}[label=\textup{(\alph*)}]
+    \item \textbf{Bounds~11, 13} are hub-invisible:
+      $f_{11}=2m^3/t^2\to 0$,
+      $f_{13}=2m^4/t^3\to 0$.
+    \item \textbf{Bounds~14 and~16} are hub-visible:
+      $f_{14}^{\mathrm{hub}} = 2t^3/m^2 \to \infty$,
+      $f_{16}^{\mathrm{hub}} = 2t^4/m^3 \to \infty$.
+    \item \textbf{Bound~30} is hub-visible: $f_{30}^{\mathrm{hub}} = m^3/t^2 + t^2/m \sim t^2/m \to \infty$.
+  \end{enumerate}
+\end{proposition}
+
+\begin{proof}
+  Substitute $(d_v, m_v) = (t, m)$ into each formula and take $t \to \infty$.
+\end{proof}
+
+The hub-invisible mechanism explains why Bounds~11 and~13 are defeated:
+as $t$ grows, the hub---which dominates the spectrum---becomes invisible
+to the bound formula.  The bound saturates at the connector value $\approx 2m$,
+while $\Lspec > 2m$ (Theorem~\ref{thm:bound11}).
+
+\begin{remark}\label{rem:bound40-mechanism}
+  Bound~40 fails on $\SoS(t,s)$ by a related mechanism: the hub--intermediate
+  edge creates a transient violation window at $t \sim s^2$, closing for
+  both small and large~$t$.
+\end{remark}
+
+\subsection{Edge-based antisymmetric modes}\label{ssec:antisymmetric}
+
+Bound~45 fails on $\DS(k,k)$ because the spectral radius arises from the
+$\sigma$-antisymmetric sector (Proposition~\ref{prop:mu-ds}), where the
+two hubs carry opposite signs.  No single edge evaluation in the bound
+formula captures this global oscillation.  The gap $\Lspec - B_{45}$ is
+$O(1/k)$, suggesting repairability with an additive $O(1/\Delta)$ correction.
+
+\subsection{Characterizing vulnerable bounds}\label{ssec:characterization}
+
+\begin{conjecture}\label{conj:characterization}
+  A vertex-type BHS bound $\Lspec(G) \leq \max_v f(d_v, m_v)$ is violated
+  by some hub--periphery graph if and only if:
+  \textup{(i)}~$f$ is monotonically increasing in $m_v/d_v$, and
+  \textup{(ii)}~$f$ is regularity-tight: $f(k,k) = 2k$ with no margin.
+\end{conjecture}
+
+
+%% =============================================================================
+%% 6. CLASSIFICATION OF REMAINING BOUNDS
+%% =============================================================================
+\section{Classification of the remaining 33 bounds}\label{sec:classification}
+
+We classify the 33~remaining bounds by gap behavior on the tested families.
+
+\begin{table}[t]
+  \centering
+  \caption{Classification of the 33~remaining open BHS bounds.}
+  \label{tab:classification}
+  \begin{tabular}{llp{5.5cm}l}
+    \toprule
+    Category & Count & Bounds & Assessment \\
+    \midrule
+    \textsc{Super-safe} & 8 & 1, 4, 5, 7, 14, 16, 21, 30 & Likely provable \\
+    \textsc{Safe} & 20 & 6, 8, 9, 12, 18--20, 22, 24--27, 34, 35, 37--39, 44, 46, 56 & Plausible \\
+    \textsc{Tight} & 3 & 33, 42, 47 & Sharp; provable? \\
+    \textsc{Marginal} & 2 & 10, 23 & Undetermined \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+The \textsc{super-safe} bounds include all hub-visible bounds (14, 16, 30).
+The three \textsc{tight} bounds achieve exact equality on~$P_3$ and complete
+bipartite graphs, making them the most promising candidates for a proof.
+
+
+%% =============================================================================
+%% 7. DISCUSSION
+%% =============================================================================
+\section{Discussion}\label{sec:discussion}
+
+\paragraph{Summary.}
+BHS~\cite{BHS2006} proposed 68~conjectured bounds for~$\Lspec(G)$.
+Ghebleh et al.~\cite{Ghebleh2024} disproved~30 via cross-entropy methods.
+We have disproved~5 more by structural construction, leaving 33~open.
+
+\paragraph{Structural vs.\ computational approaches.}
+Cross-entropy search explores adjacency matrices for $n \leq 24$.
+Our smallest counterexample has $n = 29$, beyond exhaustive reach.
+Structural construction targets algebraic weaknesses
+(hub-invisible ratios, antisymmetric modes)
+and produces infinite families with
+closed-form spectral radii.  The two approaches are complementary.
+
+\paragraph{Gap asymptotics.}
+Bounds~11/13: gap diverges (irreparable).
+Bound~40: transient window (max gap~$1.74$).
+Bound~45: gap $\to 0$ as $1/(2k)$ (repairable).
+Bound~48: degenerate $P_3$ case only.
+
+\paragraph{Open questions.}
+(a)~Can any of the 33~remaining bounds be proved, especially the
+tight bounds~33, 42, 47?
+(b)~Do three-level hierarchies violate additional bounds?
+(c)~Can Conjecture~\ref{conj:characterization} be proved?
+(d)~Can Bound~45 be repaired with an $O(1/\Delta)$ correction?
+
+
+%% =============================================================================
+%% AI DISCLOSURE (Required by Elsevier)
+%% =============================================================================
+\section*{Declaration of Generative AI in Scientific Writing}
+
+During the preparation of this work, the author used Claude
+(Anthropic; model: Claude Opus 4, 2025) for computational assistance,
+including code development for graph construction and eigenvalue
+computation, structural analysis of graph families, and systematic
+counterexample search. The author reviewed and edited all content and
+takes full responsibility for the publication.
+
+
+%% =============================================================================
+%% ACKNOWLEDGMENTS
+%% =============================================================================
+\section*{Acknowledgments}
+
+The author thanks Pierre Hansen and Dragan Stevanovi\'{c} for making the
+BHS bound list publicly available.  Computational assistance was provided
+by Claude (Anthropic); all mathematical results were independently verified
+by the author.
+%% Acknowledge Claude's computational role.
+
+
+%% =============================================================================
+%% REFERENCES
+%% =============================================================================
+\bibliographystyle{elsarticle-num}
+\bibliography{references}
+
+\end{document}

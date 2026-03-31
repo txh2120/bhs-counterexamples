@@ -1,0 +1,52 @@
+\begin{thebibliography}{1}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{BrouwerHaemers2012}
+A.~E. Brouwer, W.~H. Haemers, Spectra of Graphs, Universitext, Springer, 2012.
+\newblock \href {https://doi.org/10.1007/978-1-4614-1939-6}
+  {\path{doi:10.1007/978-1-4614-1939-6}}.
+
+\bibitem{BHS2006}
+V.~Brankov, P.~Hansen, D.~Stevanovi\'{c}, Automated conjectures on upper bounds
+  for the largest {L}aplacian eigenvalue of graphs, Linear Algebra and its
+  Applications 414~(2--3) (2006) 407--424.
+\newblock \href {https://doi.org/10.1016/j.laa.2005.10.017}
+  {\path{doi:10.1016/j.laa.2005.10.017}}.
+
+\bibitem{AutoGraphiX2000}
+G.~Caporossi, P.~Hansen, Variable neighborhood search for extremal graphs. 1.
+  {T}he {A}uto{G}raphi{X} system, Discrete Mathematics 212~(1--2) (2000)
+  29--44.
+\newblock \href {https://doi.org/10.1016/S0012-365X(99)00206-X}
+  {\path{doi:10.1016/S0012-365X(99)00206-X}}.
+
+\bibitem{Ghebleh2024}
+M.~Ghebleh, S.~Al-Yakoob, A.~Kanso, D.~Stevanovi\'{c}, Refuting conjectured
+  upper bounds for the largest {L}aplacian eigenvalue of graphs, Discrete
+  Applied MathematicsPublished online 2025. Available at
+  \url{https://arxiv.org/abs/2403.18429} (2025).
+
+\bibitem{Wagner2021}
+A.~Z. Wagner, Constructions in combinatorics via neural networks, arXiv
+  preprint arXiv:2104.14516 (2021).
+
+\bibitem{BouffardBreen2025}
+N.~Bouffard, J.~Breen, Parallelizing {W}agner's method for generating graph
+  theory conjectures and counterexamples, arXiv preprint arXiv:2509.01607
+  (2025).
+
+\bibitem{RoucairolCazenave2024}
+M.~Roucairol, T.~Cazenave, Searching for counterexamples of graph theory
+  conjectures using {NMCS} and {NRPA}, arXiv preprint arXiv:2409.18626 (2024).
+
+\bibitem{GodsilRoyle2001}
+C.~Godsil, G.~Royle, Algebraic Graph Theory, Vol. 207 of Graduate Texts in
+  Mathematics, Springer, 2001.
+\newblock \href {https://doi.org/10.1007/978-1-4613-0163-9}
+  {\path{doi:10.1007/978-1-4613-0163-9}}.
+
+\end{thebibliography}

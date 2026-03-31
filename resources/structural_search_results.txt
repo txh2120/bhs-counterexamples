@@ -1,0 +1,186 @@
+================================================================================
+STRUCTURAL COUNTEREXAMPLE SEARCH RESULTS
+Date: 2026-03-27 17:58:50
+Total graphs tested: 1119
+Elapsed: 1.1s
+================================================================================
+
+VIOLATED BOUNDS (4/38):
+  Bound 11: best_gap=-1.366032  n=153  mu=20.557439  bound=19.191406  (StarOfCliques(K8,19))
+    Total violations: 30
+      StarOfCliques(K8,19)                      n=153  mu=20.557439  bound=19.191406  gap=-1.366032
+      StarOfCliques(K9,19)                      n=172  mu=20.684658  bound=19.366526  gap=-1.318132
+      StarOfCliques(K8,18)                      n=145  mu=19.603278  bound=18.357117  gap=-1.246161
+      StarOfCliques(K8,17)                      n=137  mu=18.656854  bound=17.547363  gap=-1.109491
+      StarOfCliques(K9,18)                      n=163  mu=19.744563  bound=18.674931  gap=-1.069632
+
+  Bound 13: best_gap=-0.839947  n=172  mu=20.684658  bound=19.844712  (StarOfCliques(K9,19))
+    Total violations: 18
+      StarOfCliques(K9,19)                      n=172  mu=20.684658  bound=19.844712  gap=-0.839947
+      StarOfCliques(K9,18)                      n=163  mu=19.744563  bound=18.905486  gap=-0.839077
+      StarOfCliques(K9,17)                      n=154  mu=18.815073  bound=18.000000  gap=-0.815073
+      StarOfCliques(K8,15)                      n=121  mu=16.795832  bound=16.000000  gap=-0.795832
+      StarOfCliques(K7,13)                      n= 92  mu=14.772002  bound=14.000000  gap=-0.772002
+
+  Bound 45: best_gap=-0.164998  n= 70  mu=10.531598  bound=10.366600  (Caterpillar(spine=10,leaves=6))
+    Total violations: 62
+      Caterpillar(spine=10,leaves=6)            n= 70  mu=10.531598  bound=10.366600  gap=-0.164998
+      Caterpillar(spine=9,leaves=6)             n= 63  mu=10.510281  bound=10.366600  gap=-0.143681
+      Caterpillar(spine=10,leaves=7)            n= 80  mu=11.564697  bound=11.428090  gap=-0.136607
+      Caterpillar(spine=9,leaves=7)             n= 72  mu=11.543313  bound=11.428090  gap=-0.115223
+      Caterpillar(spine=8,leaves=6)             n= 56  mu=10.480628  bound=10.366600  gap=-0.114028
+
+  Bound 48: best_gap=-0.071068  n=  3  mu=3.000000  bound=2.928932  (Caterpillar(spine=3,leaves=0))
+    Total violations: 1
+      Caterpillar(spine=3,leaves=0)             n=  3  mu=3.000000  bound=2.928932  gap=-0.071068
+
+
+NON-VIOLATED BOUNDS (34/38):
+  Bound  1: closest_gap=+0.716689  (Caterpillar(spine=10,leaves=0))
+  Bound  4: closest_gap=+1.431220  (Caterpillar(spine=10,leaves=0))
+  Bound  5: closest_gap=+0.264554  (Caterpillar(spine=10,leaves=0))
+  Bound  6: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound  7: closest_gap=+0.764554  (Caterpillar(spine=10,leaves=0))
+  Bound  8: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound  9: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound 10: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound 12: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound 14: closest_gap=+3.208998  (Caterpillar(spine=10,leaves=0))
+  Bound 16: closest_gap=+5.579368  (Caterpillar(spine=10,leaves=0))
+  Bound 18: closest_gap=+0.340528  (Caterpillar(spine=10,leaves=0))
+  Bound 19: closest_gap=+0.055887  (Caterpillar(spine=4,leaves=0))
+  Bound 20: closest_gap=+0.058897  (Caterpillar(spine=4,leaves=0))
+  Bound 21: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound 22: closest_gap=+0.062814  (Caterpillar(spine=3,leaves=0))
+  Bound 23: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound 24: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound 25: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound 26: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound 27: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound 30: closest_gap=+1.000000  (StarOfCliques(K3,3))
+  Bound 33: closest_gap=+0.000000  (Caterpillar(spine=3,leaves=0))
+  Bound 34: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound 35: closest_gap=+0.333333  (Caterpillar(spine=3,leaves=0))
+  Bound 37: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound 38: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound 39: closest_gap=+0.414214  (Caterpillar(spine=3,leaves=0))
+  Bound 40: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound 42: closest_gap=+0.000000  (Caterpillar(spine=3,leaves=0))
+  Bound 44: closest_gap=+0.097887  (Caterpillar(spine=10,leaves=0))
+  Bound 46: closest_gap=+0.301780  (Caterpillar(spine=10,leaves=0))
+  Bound 47: closest_gap=+0.000000  (Caterpillar(spine=3,leaves=0))
+  Bound 56: closest_gap=+1.242641  (Caterpillar(spine=3,leaves=0))
+
+
+ALL COUNTEREXAMPLES (111 total):
+  Bound 11  StarOfCliques(K8,19)                      n=153  mu=20.557439  bound=19.191406  gap=-1.366032
+  Bound 11  StarOfCliques(K9,19)                      n=172  mu=20.684658  bound=19.366526  gap=-1.318132
+  Bound 11  StarOfCliques(K8,18)                      n=145  mu=19.603278  bound=18.357117  gap=-1.246161
+  Bound 11  StarOfCliques(K8,17)                      n=137  mu=18.656854  bound=17.547363  gap=-1.109491
+  Bound 11  StarOfCliques(K9,18)                      n=163  mu=19.744563  bound=18.674931  gap=-1.069632
+  Bound 11  StarOfCliques(K8,16)                      n=129  mu=17.720153  bound=16.761780  gap=-0.958373
+  Bound 11  StarOfCliques(K7,15)                      n=106  mu=16.623475  bound=15.785209  gap=-0.838267
+  Bound 11  StarOfCliques(K7,16)                      n=113  mu=17.567764  bound=16.732076  gap=-0.835688
+  Bound 11  StarOfCliques(K7,14)                      n= 99  mu=15.690416  bound=14.874755  gap=-0.815661
+  Bound 11  StarOfCliques(K9,17)                      n=154  mu=18.815073  bound=18.000000  gap=-0.815073
+  Bound 11  StarOfCliques(K7,17)                      n=120  mu=18.520797  bound=17.716071  gap=-0.804727
+  Bound 11  StarOfCliques(K8,15)                      n=121  mu=16.795832  bound=16.000000  gap=-0.795832
+  Bound 11  StarOfCliques(K7,13)                      n= 92  mu=14.772002  bound=14.000000  gap=-0.772002
+  Bound 11  StarOfCliques(K7,18)                      n=127  mu=19.480741  bound=18.737907  gap=-0.742834
+  Bound 11  StarOfCliques(K6,11)                      n= 67  mu=12.741657  bound=12.000000  gap=-0.741657
+  Bound 11  StarOfCliques(K7,12)                      n= 85  mu=13.872983  bound=13.160231  gap=-0.712752
+  Bound 11  StarOfCliques(K5,9)                       n= 46  mu=10.701562  bound=10.000000  gap=-0.701562
+  Bound 11  StarOfCliques(K7,19)                      n=134  mu=20.446222  bound=19.798298  gap=-0.647924
+  Bound 11  StarOfCliques(K8,14)                      n=113  mu=15.887482  bound=15.261658  gap=-0.625824
+  Bound 11  StarOfCliques(K6,12)                      n= 73  mu=13.653312  bound=13.028035  gap=-0.625277
+  Bound 11  StarOfCliques(K6,10)                      n= 61  mu=11.854102  bound=11.248640  gap=-0.605462
+  Bound 11  StarOfCliques(K9,16)                      n=145  mu=17.898979  bound=17.341530  gap=-0.557450
+  Bound 11  StarOfCliques(K6,13)                      n= 79  mu=14.582576  bound=14.113169  gap=-0.469407
+  Bound 11  StarOfCliques(K4,7)                       n= 29  mu=8.645751  bound=8.230453  gap=-0.415299
+  Bound 11  StarOfCliques(K5,10)                      n= 51  mu=11.605551  bound=11.248640  gap=-0.356911
+  Bound 11  StarOfCliques(K6,14)                      n= 85  mu=15.524938  bound=15.256944  gap=-0.267993
+  Bound 11  StarOfCliques(K9,15)                      n=136  mu=17.000000  bound=16.761780  gap=-0.238220
+  Bound 11  StarOfCliques(K5,8)                       n= 41  mu=9.828427  bound=9.595703  gap=-0.232724
+  Bound 11  StarOfCliques(K8,13)                      n=105  mu=15.000000  bound=14.874755  gap=-0.125245
+  Bound 11  StarOfCliques(K6,15)                      n= 91  mu=16.477226  bound=16.460905  gap=-0.016320
+  Bound 13  StarOfCliques(K9,19)                      n=172  mu=20.684658  bound=19.844712  gap=-0.839947
+  Bound 13  StarOfCliques(K9,18)                      n=163  mu=19.744563  bound=18.905486  gap=-0.839077
+  Bound 13  StarOfCliques(K9,17)                      n=154  mu=18.815073  bound=18.000000  gap=-0.815073
+  Bound 13  StarOfCliques(K8,15)                      n=121  mu=16.795832  bound=16.000000  gap=-0.795832
+  Bound 13  StarOfCliques(K7,13)                      n= 92  mu=14.772002  bound=14.000000  gap=-0.772002
+  Bound 13  StarOfCliques(K9,16)                      n=145  mu=17.898979  bound=17.127437  gap=-0.771543
+  Bound 13  StarOfCliques(K6,11)                      n= 67  mu=12.741657  bound=12.000000  gap=-0.741657
+  Bound 13  StarOfCliques(K8,14)                      n=113  mu=15.887482  bound=15.178321  gap=-0.709161
+  Bound 13  StarOfCliques(K8,16)                      n=129  mu=17.720153  bound=17.023683  gap=-0.696471
+  Bound 13  StarOfCliques(K8,17)                      n=137  mu=18.656854  bound=18.095718  gap=-0.561136
+  Bound 13  StarOfCliques(K7,14)                      n= 99  mu=15.690416  bound=15.178321  gap=-0.512095
+  Bound 13  StarOfCliques(K5,9)                       n= 46  mu=10.701562  bound=10.195435  gap=-0.506128
+  Bound 13  StarOfCliques(K7,12)                      n= 85  mu=13.872983  bound=13.389925  gap=-0.483059
+  Bound 13  StarOfCliques(K8,18)                      n=145  mu=19.603278  bound=19.217607  gap=-0.385671
+  Bound 13  StarOfCliques(K6,12)                      n= 73  mu=13.653312  bound=13.389925  gap=-0.263387
+  Bound 13  StarOfCliques(K7,15)                      n=106  mu=16.623475  bound=16.429503  gap=-0.193973
+  Bound 13  StarOfCliques(K8,19)                      n=153  mu=20.557439  bound=20.390869  gap=-0.166569
+  Bound 13  StarOfCliques(K6,10)                      n= 61  mu=11.854102  bound=11.698586  gap=-0.155516
+  Bound 45  Caterpillar(spine=10,leaves=6)            n= 70  mu=10.531598  bound=10.366600  gap=-0.164998
+  Bound 45  Caterpillar(spine=9,leaves=6)             n= 63  mu=10.510281  bound=10.366600  gap=-0.143681
+  Bound 45  Caterpillar(spine=10,leaves=7)            n= 80  mu=11.564697  bound=11.428090  gap=-0.136607
+  Bound 45  Caterpillar(spine=9,leaves=7)             n= 72  mu=11.543313  bound=11.428090  gap=-0.115223
+  Bound 45  Caterpillar(spine=8,leaves=6)             n= 56  mu=10.480628  bound=10.366600  gap=-0.114028
+  Bound 45  Caterpillar(spine=10,leaves=8)            n= 90  mu=12.592230  bound=12.478550  gap=-0.113681
+  Bound 45  MultiHub(7,5,7)                           n= 22  mu=9.729312  bound=9.615773  gap=-0.113539
+  Bound 45  MultiHub(8,6,8)                           n= 25  mu=10.754807  bound=10.653837  gap=-0.100971
+  Bound 45  DoubleStar(6,6)                           n= 14  mu=8.772002  bound=8.676184  gap=-0.095818
+  Bound 45  MultiHub(6,6)                             n= 14  mu=8.772002  bound=8.676184  gap=-0.095818
+  Bound 45  Caterpillar(spine=10,leaves=9)            n=100  mu=13.615520  bound=13.520732  gap=-0.094788
+  Bound 45  Caterpillar(spine=9,leaves=8)             n= 81  mu=12.570782  bound=12.478550  gap=-0.092232
+  Bound 45  MultiHub(9,7,9)                           n= 28  mu=11.775833  bound=11.685040  gap=-0.090793
+  Bound 45  Caterpillar(spine=8,leaves=7)             n= 64  mu=11.513566  bound=11.428090  gap=-0.085475
+  Bound 45  MultiHub(10,8,10)                         n= 31  mu=12.793487  bound=12.711082  gap=-0.082405
+  Bound 45  DoubleStar(7,7)                           n= 16  mu=9.795832  bound=9.713624  gap=-0.082207
+  Bound 45  MultiHub(7,7)                             n= 16  mu=9.795832  bound=9.713624  gap=-0.082207
+  Bound 45  Caterpillar(spine=10,leaves=10)           n=110  mu=14.635493  bound=14.556539  gap=-0.078954
+  Bound 45  MultiHub(11,9,11)                         n= 34  mu=13.808528  bound=13.733144  gap=-0.075384
+  Bound 45  Caterpillar(spine=9,leaves=9)             n= 90  mu=13.594011  bound=13.520732  gap=-0.073278
+  Bound 45  DoubleStar(8,8)                           n= 18  mu=10.815073  bound=10.743251  gap=-0.071822
+  Bound 45  MultiHub(8,8)                             n= 18  mu=10.815073  bound=10.743251  gap=-0.071822
+  Bound 45  MultiHub(8,6,6,8)                         n= 32  mu=10.725063  bound=10.653837  gap=-0.071226
+  Bound 45  Caterpillar(spine=7,leaves=6)             n= 49  mu=10.437687  bound=10.366600  gap=-0.071086
+  Bound 45  DoubleStar(9,9)                           n= 20  mu=11.830952  bound=11.767292  gap=-0.063660
+  Bound 45  MultiHub(9,9)                             n= 20  mu=11.830952  bound=11.767292  gap=-0.063660
+  Bound 45  MultiHub(9,7,7,9)                         n= 36  mu=11.748601  bound=11.685040  gap=-0.063561
+  Bound 45  Caterpillar(spine=8,leaves=8)             n= 72  mu=12.540943  bound=12.478550  gap=-0.062394
+  Bound 45  Caterpillar(spine=9,leaves=10)            n= 99  mu=14.613927  bound=14.556539  gap=-0.057388
+  Bound 45  DoubleStar(10,10)                         n= 22  mu=12.844289  bound=12.787198  gap=-0.057091
+  Bound 45  MultiHub(10,10)                           n= 22  mu=12.844289  bound=12.787198  gap=-0.057091
+  Bound 45  DoubleStar(11,11)                         n= 24  mu=13.855655  bound=13.803954  gap=-0.051700
+  Bound 45  MultiHub(11,11)                           n= 24  mu=13.855655  bound=13.803954  gap=-0.051700
+  Bound 45  DoubleStar(12,12)                         n= 26  mu=14.865460  bound=14.818256  gap=-0.047204
+  Bound 45  MultiHub(12,12)                           n= 26  mu=14.865460  bound=14.818256  gap=-0.047204
+  Bound 45  DoubleStar(13,13)                         n= 28  mu=15.874008  bound=15.830608  gap=-0.043400
+  Bound 45  MultiHub(13,13)                           n= 28  mu=15.874008  bound=15.830608  gap=-0.043400
+  Bound 45  Caterpillar(spine=8,leaves=9)             n= 80  mu=13.564087  bound=13.520732  gap=-0.043354
+  Bound 45  Caterpillar(spine=7,leaves=7)             n= 56  mu=11.470484  bound=11.428090  gap=-0.042393
+  Bound 45  DoubleStar(14,14)                         n= 30  mu=16.881527  bound=16.841384  gap=-0.040144
+  Bound 45  MultiHub(14,14)                           n= 30  mu=16.881527  bound=16.841384  gap=-0.040144
+  Bound 45  DoubleStar(15,15)                         n= 32  mu=17.888194  bound=17.850867  gap=-0.037327
+  Bound 45  MultiHub(15,15)                           n= 32  mu=17.888194  bound=17.850867  gap=-0.037327
+  Bound 45  DoubleStar(16,16)                         n= 34  mu=18.894147  bound=18.859279  gap=-0.034868
+  Bound 45  DoubleStar(17,17)                         n= 36  mu=19.899495  bound=19.866791  gap=-0.032704
+  Bound 45  DoubleStar(18,18)                         n= 38  mu=20.904326  bound=20.873540  gap=-0.030786
+  Bound 45  DoubleStar(19,19)                         n= 40  mu=21.908712  bound=21.879638  gap=-0.029074
+  Bound 45  DoubleStar(20,20)                         n= 42  mu=22.912712  bound=22.885174  gap=-0.027539
+  Bound 45  Caterpillar(spine=8,leaves=10)            n= 88  mu=14.583923  bound=14.556539  gap=-0.027385
+  Bound 45  DoubleStar(21,21)                         n= 44  mu=23.916375  bound=23.890222  gap=-0.026153
+  Bound 45  DoubleStar(22,22)                         n= 46  mu=24.919742  bound=24.894845  gap=-0.024898
+  Bound 45  DoubleStar(23,23)                         n= 48  mu=25.922848  bound=25.899093  gap=-0.023755
+  Bound 45  MultiHub(7,6,6,6,7)                       n= 37  mu=10.389651  bound=10.366600  gap=-0.023051
+  Bound 45  DoubleStar(24,24)                         n= 50  mu=26.925722  bound=26.903012  gap=-0.022710
+  Bound 45  DoubleStar(25,25)                         n= 52  mu=27.928388  bound=27.906637  gap=-0.021751
+  Bound 45  DoubleStar(26,26)                         n= 54  mu=28.930870  bound=28.910001  gap=-0.020869
+  Bound 45  DoubleStar(27,27)                         n= 56  mu=29.933185  bound=29.913131  gap=-0.020054
+  Bound 45  DoubleStar(28,28)                         n= 58  mu=30.935349  bound=30.916050  gap=-0.019299
+  Bound 45  Caterpillar(spine=7,leaves=8)             n= 63  mu=12.497727  bound=12.478550  gap=-0.019178
+  Bound 45  DoubleStar(29,29)                         n= 60  mu=31.937377  bound=31.918779  gap=-0.018599
+  Bound 45  Caterpillar(spine=6,leaves=6)             n= 42  mu=10.372239  bound=10.366600  gap=-0.005639
+  Bound 45  Caterpillar(spine=7,leaves=9)             n= 70  mu=13.520745  bound=13.520732  gap=-0.000013
+  Bound 48  Caterpillar(spine=3,leaves=0)             n=  3  mu=3.000000  bound=2.928932  gap=-0.071068

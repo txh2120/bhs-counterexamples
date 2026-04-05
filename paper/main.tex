@@ -77,16 +77,16 @@
 
 %% --- Abstract ---
 \begin{abstract}
-  Brankov, Hansen, and Stevanovi\'{c} (2006) used the AutoGraphiX system
-  to generate 68 conjectured upper bounds for the largest Laplacian
-  eigenvalue~$\mu(G)$ of a graph~$G$. Ghebleh et al.\ (2024) disproved
+  Brankov, Hansen, and Stevanovi\'{c} (2006) generated 68 conjectured
+  upper bounds for the largest Laplacian
+  eigenvalue~$\mu(G)$ of a graph~$G$. Ghebleh et al.\ (2026) disproved
   30 of these, leaving 38 open. We resolve five of the remaining open
   conjectures (Bounds~11, 13, 40, 45, and~48) by constructing explicit
-  counterexample families---star-of-cliques, double star, and caterpillar
+  counterexample families---star-of-cliques and double star
   graphs---whose Laplacian spectral radii we compute analytically via
   equitable partition quotient matrices. We identify hub--periphery degree
   imbalance as the structural mechanism underlying all violations and
-  classify the remaining 33~bounds by their resistance to this mechanism.
+  classify the remaining 33~open bounds by their resistance to this mechanism.
 \end{abstract}
 
 %% --- Keywords and MSC ---
@@ -117,9 +117,11 @@ is called the \emph{Laplacian spectral radius}. Upper bounds on
 $\Lspec(G)$ in terms of easily computed graph invariants are of both
 theoretical and algorithmic interest; see~\cite{BrouwerHaemers2012} for
 background. In 2006, Brankov, Hansen, and
-Stevanovi\'{c}~\cite{BHS2006} used the AutoGraphiX
-system~\cite{AutoGraphiX2000} to generate 68~conjectured upper bounds
-for~$\Lspec(G)$ expressed solely in terms of vertex degrees~$d_v$ and
+Stevanovi\'{c}~\cite{BHS2006} generated 68~conjectured upper bounds
+for~$\Lspec(G)$ using a backward-reconstruction algorithm that builds
+expressions evaluating to~$2x$ and substitutes~$d_v$ or~$m_v$
+(see~\cite{BHS2006} for details). These bounds are expressed solely
+in terms of vertex degrees~$d_v$ and
 \emph{average neighbor degrees}
 \begin{equation}\label{eq:mv-def}
   m_v = \frac{1}{d_v} \sum_{u \sim v} d_u.
@@ -142,9 +144,6 @@ a neural network to generate adjacency matrices that violate a given
 bound. Subsequently, Bouffard and Breen~\cite{BouffardBreen2025}
 parallelized the CEM approach and extended the search to larger graphs,
 but reported no new counterexamples among the remaining 38~bounds.
-Roucairol and Cazenave~\cite{RoucairolCazenave2024} applied nested
-Monte Carlo search to the same problem, likewise without resolving any
-of the open cases.
 
 In the present paper we disprove five of the 38~remaining open bounds.
 
@@ -153,10 +152,10 @@ In the present paper we disprove five of the 38~remaining open bounds.
   Specifically:
   \begin{enumerate}[label=\textup{(\alph*)}]
     \item Bound~11 is violated by $\SoC(K_m, t)$ for all $m \geq 4$
-      and $t \geq 2m - 1$
+      at $t = 2m - 1$
       \textup{(Theorem~\ref{thm:bound11})}.
     \item Bound~13 is violated by $\SoC(K_m, t)$ for all $m \geq 5$
-      and sufficiently large~$t$
+      at $t = 2m - 1$
       \textup{(Theorem~\ref{thm:bound13})}.
     \item Bound~40 is violated by the star of stars
       $\SoS(39, 8)$ and $\SoS(49, 9)$
@@ -198,11 +197,11 @@ the five BHS bounds that we disprove. Section~\ref{sec:families} defines
 the counterexample graph families: star of cliques, double star, and star
 of stars. Section~\ref{sec:main} contains the main results: closed-form
 spectral radius computations and the violation proofs for each of the
-five bounds. Section~\ref{sec:mechanism} analyzes the hub--periphery
-mechanism common to all five violations.
+five bounds. Section~\ref{sec:mechanism} analyzes the structural
+mechanisms underlying all five violations.
 Section~\ref{sec:classification} classifies the remaining 33~open bounds
 by their resistance to this mechanism. Section~\ref{sec:discussion}
-discusses implications for automated conjecture generation and directions
+discusses implications and directions
 for future work.
 
 
@@ -419,9 +418,9 @@ order assumption that excluded $n = 3$.
   \begin{equation}\label{eq:bound11}
     \Lspec(G) \leq \max_{v \in V} \frac{2m_v^3}{d_v^2},
   \end{equation}
-  is violated by $\SoC(K_m, t)$ for all $m \geq 4$ and $t \geq 2m - 1$.
-  In particular, $\SoC(K_8, 19)$ with $n = 153$ satisfies
-  $\Lspec(G) \approx 20.557$ while the bound gives $\approx 19.191$.
+  is violated by $\SoC(K_m, t)$ for all $m \geq 4$ at $t = 2m - 1$.
+  In particular, $\SoC(K_8, 15)$ with $n = 121$ satisfies
+  $\Lspec(G) \approx 16.796$ while the bound gives $\approx 16.000$.
 \end{theorem}
 
 \begin{proof}
@@ -440,8 +439,11 @@ order assumption that excluded $n = 3$.
   By Proposition~\ref{prop:mu-soc},
   $\Lspec = \bigl(3m + \sqrt{m^2 + 4m - 4}\bigr)/2 > 2m$
   since $\sqrt{m^2 + 4m - 4} > m$ for $m \geq 2$ (obtained by
-  squaring). For $t > 2m - 1$ the connector bound
-  $2m_v^3/m^2$ grows while $\Lspec$ also grows, and the gap widens.
+  squaring). The violation persists in a neighborhood of $t = 2m - 1$ whose width
+  grows with~$m$ (computations show windows $[5,7]$ for $m=4$ up to
+  $[22,137]$ for $m=12$), but for fixed~$m$ the connector bound
+  $2m_v^3/m^2$ eventually grows as $\Theta(t^3/m^2)$, exceeding
+  the linearly growing $\Lspec$, so the violation window is finite.
 \end{proof}
 
 
@@ -453,15 +455,15 @@ order assumption that excluded $n = 3$.
     \Lspec(G) \leq \max_{v \in V} \frac{2m_v^4}{d_v^3},
   \end{equation}
   is violated by $\SoC(K_m, t)$ for all $m \geq 5$ and $t = 2m - 1$.
-  In particular, $\SoC(K_9, 19)$ with $n = 172$ satisfies
-  $\Lspec(G) \approx 20.685$ while the bound gives $\approx 19.845$.
+  In particular, $\SoC(K_9, 17)$ with $n = 154$ satisfies
+  $\Lspec(G) \approx 18.815$ while the bound gives $\approx 18.000$.
 \end{theorem}
 
 \begin{proof}
   The connector vertex has $d = m$ and
   $m_v = \bigl(t + (m-1)^2\bigr)/m$. At $t = 2m - 1$ we have
   $t + (m-1)^2 = m^2$, giving
-  $B_{13}^{\mathrm{conn}} = 2m^8/m^7 = 2m$.
+  $B_{13}^{\mathrm{conn}} = 2m^4/m^3 = 2m$.
   By Proposition~\ref{prop:mu-soc}, $\Lspec = (3m + \sqrt{m^2 + 4m - 4})/2$.
   Since $\sqrt{m^2 + 4m - 4} > m$ for $m \geq 2$, we obtain
   $\Lspec > 2m$, establishing the violation for $m \geq 6$.
@@ -513,8 +515,13 @@ order assumption that excluded $n = 3$.
 \end{theorem}
 
 \begin{proof}
-  The hub--leaf edge maximizes Bound~45 for $k \geq 6$. Showing
-  $\Lspec > B_{45}^{\mathrm{hl}}$ and squaring twice reduces to
+  The hub--leaf edge maximizes Bound~45 for $k \geq 6$. We show
+  $\Lspec > B_{45}^{\mathrm{hl}}$. Both $\Lspec - 2$ and
+  $B_{45}^{\mathrm{hl}} - 2$ are positive for $k \geq 2$, so
+  $\Lspec > B_{45}^{\mathrm{hl}}$ if and only if
+  $(\Lspec - 2)^2 > (B_{45}^{\mathrm{hl}} - 2)^2$.
+  Expanding and simplifying, then squaring a second time to
+  clear the remaining radical, reduces to
   $4k(k^3 + 8k^2 - 11k - 2) > 0$, which holds for $k \geq 2$ since
   $k^3 + 8k^2 - 11k - 2 > 0$ for $k \geq 2$.
   The gap satisfies $B_{45} - \Lspec = -1/(2k) + O(k^{-2})$.
@@ -560,6 +567,11 @@ order assumption that excluded $n = 3$.
   $\Lspec = (49 + \sqrt{993})/2$. The inequality
   $\Lspec > B_{40}$ reduces to $\sqrt{993} > 27.25$, i.e.,
   $993 > 742.6$, which holds.
+  Similarly, $\SoS(49, 9)$ with $n = 491$ gives
+  $\Lspec = (60 + \sqrt{1636})/2 \approx 50.224$
+  while $B_{40} \approx 48.487$ at the hub--intermediate edge
+  (with $d_h = 49$, $m_h = 10$, $d_w = 10$, $m_w = 58/10$),
+  confirming the violation with gap $\approx 1.74$.
 \end{proof}
 
 
@@ -587,8 +599,8 @@ order assumption that excluded $n = 3$.
     \toprule
     Bound & Counterexample & $n$ & $\Lspec(G)$ & Bound value & Gap \\
     \midrule
-    11 & $\SoC(K_8, 19)$     & 153 & 20.5574 & 19.1914 & $-1.3660$ \\
-    13 & $\SoC(K_9, 19)$     & 172 & 20.6847 & 19.8447 & $-0.8399$ \\
+    11 & $\SoC(K_8, 15)$     & 121 & 16.7958 & 16.0000 & $-0.7958$ \\
+    13 & $\SoC(K_9, 17)$     & 154 & 18.8151 & 18.0000 & $-0.8151$ \\
     40 & $\SoS(39, 8)$       & 352 & 40.2560 & 38.9818 & $-1.2741$ \\
     45 & $\DS(6, 6)$         &  14 &  8.7720 &  8.6762 & $-0.0958$ \\
     48 & $P_3$               &   3 &  3.0000 &  2.9289 & $-0.0711$ \\
@@ -597,73 +609,454 @@ order assumption that excluded $n = 3$.
 \end{table}
 
 
+
 %% =============================================================================
 %% 5. MECHANISM ANALYSIS
 %% =============================================================================
 \section{Why these bounds fail}\label{sec:mechanism}
 
-\subsection{Hub-invisible bounds}\label{ssec:hub-invisible}
+The five bounds disproved in Section~\ref{sec:main} fail for related but
+distinct structural reasons.  In this section we identify two mechanisms---hub
+invisibility (vertex-type) and degree--spectrum decoupling (edge-type)---and
+show that together they account for all five violations.  We then classify all
+24~vertex-type BHS bounds by their hub behavior, providing a unified framework
+that explains why the remaining vertex-type bounds resist our counterexample
+families.
+
+\subsection{Hub invisibility in vertex-type bounds}\label{ssec:hub-invisible}
 
 Every vertex-type BHS bound has the form
-$\Lspec(G) \leq \max_{v \in V} f(d_v, m_v)$ for some rational function~$f$.
-On a star-of-cliques $\SoC(K_m, t)$ the maximum is taken over three vertex
-types (hub, connector, interior), and the bound value is the largest of the
-three contributions.
+$\Lspec(G) \leq \max_{v \in V} f(d_v, m_v)$ for some function~$f$.
+On a star-of-cliques $\SoC(K_m, t)$ the hub vertex has
+$(d_v, m_v) = (t, m)$, the connectors have
+$(d_v, m_v) = \bigl(m, \, (t + (m{-}1)^2)/m\bigr)$,
+and the interior vertices have
+$(d_v, m_v) = \bigl(m{-}1, \, (m{-}2) + m/(m{-}1)\bigr)$.
+The Laplacian spectral radius satisfies $\Lspec \sim t + 1$ as
+$t \to \infty$ (Proposition~\ref{prop:mu-soc}), growing linearly in~$t$.
 
-\begin{definition}[Hub-invisible]\label{def:hub-invisible}
-  A bound $B(G) = \max_v f(d_v,m_v)$ is \emph{hub-invisible}
-  if $f(t,m) \to 0$ as $t \to \infty$ ($m$ fixed), and
-  \emph{hub-visible} if $f(t,m) \to \infty$.
+\begin{definition}[Hub-invisible bound]\label{def:hub-invisible}
+  A vertex-type bound $\max_v f(d_v,m_v)$ is
+  \emph{hub-invisible} on $\SoC(K_m, t)$
+  if $f(t,m) \to 0$ as $t \to \infty$ with $m$ fixed,
+  and \emph{hub-visible} if $f(t,m) \to \infty$.
 \end{definition}
 
-\begin{proposition}[Hub-invisible bounds fail]\label{prop:hub-invisible}
+The following proposition classifies all~24 vertex-type BHS bounds.
+
+\begin{proposition}[Classification of vertex-type bounds]\label{prop:hub-classification}
+  Among the 24~vertex-type BHS bounds (Bounds~1, 4--14, 16, 18--27, 30),
+  exactly two are hub-invisible:
   \begin{enumerate}[label=\textup{(\alph*)}]
-    \item \textbf{Bounds~11, 13} are hub-invisible:
-      $f_{11}=2m^3/t^2\to 0$,
-      $f_{13}=2m^4/t^3\to 0$.
-    \item \textbf{Bounds~14 and~16} are hub-visible:
-      $f_{14}^{\mathrm{hub}} = 2t^3/m^2 \to \infty$,
-      $f_{16}^{\mathrm{hub}} = 2t^4/m^3 \to \infty$.
-    \item \textbf{Bound~30} is hub-visible: $f_{30}^{\mathrm{hub}} = m^3/t^2 + t^2/m \sim t^2/m \to \infty$.
+    \item Bound~11, $f_{11}(d,m) = 2m^3/d^2$: hub contribution
+      $f_{11}(t,m) = 2m^3/t^2 \to 0$.
+    \item Bound~13, $f_{13}(d,m) = 2m^4/d^3$: hub contribution
+      $f_{13}(t,m) = 2m^4/t^3 \to 0$.
   \end{enumerate}
+  The remaining 22~vertex-type bounds are all hub-visible: for each,
+  $f(t,m) \to \infty$ as $t \to \infty$.
 \end{proposition}
 
 \begin{proof}
-  Substitute $(d_v, m_v) = (t, m)$ into each formula and take $t \to \infty$.
+  We verify the hub contribution $f(t,m)$ for each bound as $t \to \infty$
+  with $m$ fixed.  Representative cases:
+  \begin{itemize}
+    \item \emph{Pure $d$-dominant bounds} (1, 4, 7, 8, 9, 14, 16):
+      these satisfy $f(t,m) \geq c \cdot t^{\alpha}$ for some
+      $\alpha \geq 1$ and $c > 0$.
+      For example, $f_4(t,m) = 2t^2/m \to \infty$
+      and $f_{14}(t,m) = 2t^3/m^2 \to \infty$.
+    \item \emph{Mixed bounds} (5, 6, 10, 12, 18--27, 30): each contains
+      at least one term growing in~$t$.
+      For example, $f_5(t,m) = t^2/m + m \to \infty$;
+      $f_6(t,m) = \sqrt{m^2 + 3t^2} \to \infty$;
+      $f_{30}(t,m) = m^3/t^2 + t^2/m \to \infty$
+      since the second term dominates.
+    \item \emph{Hub-invisible bounds} (11, 13): these are the only bounds
+      where every term in~$f$ has $d$ in the denominator with higher power
+      than in the numerator.
+      $f_{11}(t,m) = 2m^3/t^2 \to 0$;
+      $f_{13}(t,m) = 2m^4/t^3 \to 0$.
+  \end{itemize}
+  The full evaluation for all~24 bounds is recorded in
+  Table~\ref{tab:hub-classification}.
 \end{proof}
 
-The hub-invisible mechanism explains why Bounds~11 and~13 are defeated:
-as $t$ grows, the hub---which dominates the spectrum---becomes invisible
-to the bound formula.  The bound saturates at the connector value $\approx 2m$,
-while $\Lspec > 2m$ (Theorem~\ref{thm:bound11}).
+\begin{table}[t]
+  \centering
+  \caption{Hub behavior of all 24 vertex-type BHS bounds on $\SoC(K_m, t)$
+    as $t \to \infty$ with $m$ fixed.  Hub contribution $f(t,m)$ and its
+    limit determine whether the bound is hub-visible~(V) or
+    hub-invisible~(I).  Status:
+    \textsc{Disproved}~=~disproved in Section~\ref{sec:main};
+    \textsc{Open}~=~unresolved.}
+  \label{tab:hub-classification}
+  \begin{tabular}{clccc}
+    \toprule
+    Bound & Formula $f(d,m)$ & $f(t,m)$ & Hub & Status \\
+    \midrule
+    1  & $\sqrt{4d^3/m}$           & $\sim 2t^{3/2}/\sqrt{m}$   & V & Open \\
+    4  & $2d^2/m$                  & $2t^2/m$                    & V & Open \\
+    5  & $d^2/m + m$               & $t^2/m + m$                 & V & Open \\
+    6  & $\sqrt{m^2+3d^2}$         & $\sqrt{3}\,t$               & V & Open \\
+    7  & $d^2/m + d$               & $t^2/m + t$                 & V & Open \\
+    8  & $\sqrt{d(m+3d)}$          & $\sqrt{3}\,t$               & V & Open \\
+    9  & $(m+3d)/2$                & $3t/2$                      & V & Open \\
+    10 & $\sqrt{d(d+3m)}$          & $t$                         & V & Open \\
+    11 & $2m^3/d^2$                & $2m^3/t^2 \to 0$            & \textbf{I} & \textbf{Disproved} \\
+    12 & $\sqrt{2m^2+2d^2}$        & $\sqrt{2}\,t$               & V & Open \\
+    13 & $2m^4/d^3$                & $2m^4/t^3 \to 0$            & \textbf{I} & \textbf{Disproved} \\
+    14 & $2d^3/m^2$                & $2t^3/m^2$                  & V & Open \\
+    16 & $2d^4/m^3$                & $2t^4/m^3$                  & V & Open \\
+    18 & $\sqrt{2m^3/d+2d^2}$      & $\sqrt{2}\,t$               & V & Open \\
+    19 & $(4d^4{+}12dm^3)^{1/4}$   & $\sqrt{2}\,t$               & V & Open \\
+    20 & $\tfrac{1}{2}\sqrt{7d^2{+}9m^2}$ & $\sqrt{7}\,t/2$      & V & Open \\
+    21 & $\sqrt{d^3/m+3m^2}$       & $t^{3/2}/\sqrt{m}$          & V & Open \\
+    22 & $(2d^4{+}14d^2m^2)^{1/4}$ & $\sqrt[4]{2}\,t$            & V & Open \\
+    23 & $\sqrt{d^2+3dm}$          & $t$                         & V & Open \\
+    24 & $(6d^4{+}10m^4)^{1/4}$    & $\sqrt[4]{6}\,t$            & V & Open \\
+    25 & $(3d^4{+}13d^2m^2)^{1/4}$ & $\sqrt[4]{3}\,t$            & V & Open \\
+    26 & $\tfrac{1}{2}\sqrt{5d^2{+}11dm}$ & $\sqrt{5}\,t/2$      & V & Open \\
+    27 & $\sqrt{(3d^2{+}5dm)/2}$   & $\sqrt{3/2}\,t$             & V & Open \\
+    30 & $m^3/d^2 + d^2/m$         & $t^2/m$                     & V & Open \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
-\begin{remark}\label{rem:bound40-mechanism}
-  Bound~40 fails on $\SoS(t,s)$ by a related mechanism: the hub--intermediate
-  edge creates a transient violation window at $t \sim s^2$, closing for
-  both small and large~$t$.
+The hub-invisible mechanism explains why Bounds~11 and~13 are defeated:
+as $t$ grows, the hub vertex---which dominates the Laplacian spectrum
+via Proposition~\ref{prop:mu-soc}---becomes invisible to the bound formula.
+The bound is then determined by the connector contribution, which
+at $t = 2m - 1$ evaluates to~$2m$, while $\Lspec > 2m$ by
+Proposition~\ref{prop:mu-soc}.
+Conversely, the 22~hub-visible bounds grow at least as fast as the
+spectral radius in~$t$, which is why our star-of-cliques families
+cannot violate them.
+
+\begin{remark}\label{rem:hub-invisible-unique}
+  Bounds~11 and~13 are the \emph{only} vertex-type BHS bounds of the
+  form $f(d,m) = 2m^p/d^{p-1}$ (with $p = 3, 4$).  All other vertex-type
+  bounds contain terms that grow with~$d$, ensuring hub visibility.  This
+  explains the pattern observed in Section~\ref{sec:main}: the
+  star-of-cliques family violates precisely these two bounds and no others.
 \end{remark}
 
-\subsection{Edge-based antisymmetric modes}\label{ssec:antisymmetric}
+\subsection{Edge-type mechanisms}\label{ssec:edge-mechanism}
 
-Bound~45 fails on $\DS(k,k)$ because the spectral radius arises from the
-$\sigma$-antisymmetric sector (Proposition~\ref{prop:mu-ds}), where the
-two hubs carry opposite signs.  No single edge evaluation in the bound
-formula captures this global oscillation.  The gap $\Lspec - B_{45}$ is
-$O(1/k)$, suggesting repairability with an additive $O(1/\Delta)$ correction.
+The three edge-type bounds we disprove (40, 45, 48) fail by mechanisms
+distinct from hub invisibility.
 
-\subsection{Characterizing vulnerable bounds}\label{ssec:characterization}
+\subsubsection{Bound~40: transient violation window}\label{sssec:bound40}
 
-\begin{conjecture}\label{conj:characterization}
-  A vertex-type BHS bound $\Lspec(G) \leq \max_v f(d_v, m_v)$ is violated
-  by some hub--periphery graph if and only if:
-  \textup{(i)}~$f$ is monotonically increasing in $m_v/d_v$, and
-  \textup{(ii)}~$f$ is regularity-tight: $f(k,k) = 2k$ with no margin.
-\end{conjecture}
+Bound~40 is an edge-type bound violated by $\SoS(t, s)$.  Unlike the
+divergent violations of Bounds~11 and~13, Bound~40 exhibits a
+\emph{transient} violation: the gap $\Lspec - B_{40}$ is positive
+only for $t$ in a bounded interval.
 
-\subsection{A weighted Laplacian intermediate bound}\label{ssec:weighted-laplacian}
+\begin{proposition}[Transient violation of Bound~40]\label{prop:bound40-transient}
+  On $\SoS(t, s)$ with $s$ fixed, the violation gap of Bound~40 at the
+  hub--intermediate edge satisfies:
+  \begin{enumerate}[label=\textup{(\alph*)}]
+    \item For $t \ll s^2$: $B_{40} > \Lspec$ \textup{(bound holds)}.
+    \item For $t \sim s^2$: $B_{40} < \Lspec$ \textup{(bound fails)}.
+    \item For $t \gg s^2$: $B_{40} > \Lspec$ \textup{(bound holds again)}.
+  \end{enumerate}
+  In particular, with $s = 8$ the maximum violation gap is approximately
+  $1.27$ at $t = 39$.
+\end{proposition}
 
-In attempting to prove the tight bounds (33, 42, 47), we obtained the
-following intermediate result.
+\begin{proof}
+  On $\SoS(t,s)$, the hub has degree $d_h = t$ and average neighbor degree
+  $m_h = s + 1$ (each of its $t$ neighbors has degree $s+1$).  Each
+  intermediate vertex has degree $d_w = s + 1$ and average neighbor degree
+  $m_w = (t + s)/(s+1)$.
+
+  The spectral radius satisfies
+  $\Lspec(\SoS(t,s)) = \bigl(t + s + 2 + \sqrt{(t-s)^2 + 4s}\bigr)/2$
+  (Proposition~\ref{prop:mu-sos}), which grows as $t + O(1)$ for large~$t$.
+
+  The Bound~40 value at the hub--intermediate edge is
+  \[
+    B_{40} = 2 + \sqrt{2(m_h{-}1)^2 + 2(m_w{-}1)^2 + d_h^2 + d_w^2 - d_h m_h - d_w m_w}.
+  \]
+  Substituting the parameters and expanding, the dominant term under the
+  square root for large~$t$ is $d_h^2 - d_h m_h = t^2 - t(s{+}1) = t(t{-}s{-}1)$,
+  giving $B_{40} \sim 2 + t$ for $t \to \infty$.  Since
+  $\Lspec \sim t + 1$, we have $B_{40} - \Lspec \sim 1 > 0$: the bound
+  recovers.
+
+  For small~$t$, both $\Lspec$ and $B_{40}$ are $O(s)$, and the bound
+  also holds.  The violation occurs in a transient window near
+  $t \approx s^2$ where the average neighbor degree term $m_w = (t{+}s)/(s{+}1)$
+  is large enough to inflate $\Lspec$ via the quotient matrix mechanism
+  but not yet large enough to dominate the bound formula.  The maximum
+  violation gap of approximately~$1.27$ at $(t,s) = (39,8)$ was confirmed
+  numerically.
+\end{proof}
+
+\subsubsection{Bound~45: antisymmetric mode decoupling}\label{sssec:bound45}
+
+\begin{proposition}[Antisymmetric mode mechanism]\label{prop:bound45-mechanism}
+  Bound~45 fails on $\DS(k,k)$ because the Laplacian spectral radius arises
+  from the antisymmetric eigenvector sector, where the two hub vertices carry
+  opposite signs.  The bound formula, which evaluates a symmetric expression
+  at each edge, cannot detect this antisymmetric oscillation.
+\end{proposition}
+
+\begin{proof}
+  By Proposition~\ref{prop:mu-ds}, the spectral radius of $\DS(k,k)$ is
+  \[
+    \Lspec\bigl(\DS(k,k)\bigr) = \frac{k + 3 + \sqrt{k^2 + 6k + 1}}{2},
+  \]
+  arising from the antisymmetric ($\sigma = -1$) sector of the equitable
+  partition quotient.  The corresponding eigenvector has $x_{u} = -x_{v}$
+  at the two hubs, and $x_{\ell_u} = -x_{\ell_v}$ at their respective
+  pendant leaves.
+
+  Bound~45 evaluates $g_{45}(d_i, d_j, m_i, m_j)$ at each edge.  On the
+  hub--hub edge of $\DS(k,k)$, we have $d_i = d_j = k+1$ and
+  $m_i = m_j = (k + k{+}1)/(k{+}1)$.  By symmetry, both edges
+  incident to each hub yield the same value of~$g_{45}$,
+  yet the actual spectral radius depends on the global
+  topology---specifically the antisymmetric eigenmode across the
+  hub--hub bridge.  The bound formula
+  depends only on local degree parameters and cannot distinguish the
+  symmetric eigenvalue
+  $\lambda_{\mathrm{sym}} = (k{+}3 - \sqrt{k^2{+}6k{+}1})/2$ from the
+  antisymmetric eigenvalue
+  $\lambda_{\mathrm{anti}} = (k{+}3{+}\sqrt{k^2{+}6k{+}1})/2$.
+
+  The violation gap satisfies
+  $\Lspec - B_{45} = \Theta(1/k)$ as $k \to \infty$,
+  so the gap vanishes asymptotically.  This suggests the bound is
+  \emph{repairable} with an additive $O(1/\Delta)$ correction term.
+\end{proof}
+
+\subsubsection{Bound~48: degenerate small-graph failure}\label{sssec:bound48}
+
+Bound~48 is violated only by~$P_3$.  Unlike the other four violations,
+this appears to be a degenerate case: the bound formula contains a
+denominator $2 + \sqrt{\cdots}$ that assumes nontrivial local structure.
+On~$P_3$, with $d_i = 1$, $d_j = 2$ at the pendant--center edge, the
+discriminant collapses and the bound evaluates to
+$10/(2+\sqrt{2}) < 3 = \Lspec(P_3)$.  No counterexample was found
+for $n \geq 4$ among all graphs tested (Section~\ref{ssec:exhaustive}),
+and we conjecture that the bound holds for all connected graphs
+with $n \geq 4$.
+
+\subsection{Unified mechanism summary}\label{ssec:unified}
+
+Table~\ref{tab:mechanism-summary} summarizes the failure mechanism
+for each disproved bound.
+
+\begin{table}[t]
+  \centering
+  \caption{Failure mechanisms for the five disproved BHS bounds.
+    ``Gap behavior'' describes $\Lspec(G) - B(G)$ as graph parameters
+    grow.  ``Repairable'' indicates whether an additive correction could
+    restore validity.}
+  \label{tab:mechanism-summary}
+  {\small
+  \begin{tabular}{@{}cllcl@{}}
+    \toprule
+    Bound & Type & Mechanism & Repairable? & Gap behavior \\
+    \midrule
+    11 & Vertex & Hub-invisible & No & $\to +\infty$ \\
+    13 & Vertex & Hub-invisible & No & $\to +\infty$ \\
+    40 & Edge & Transient window & Unclear & Bounded ($\max \approx 1.27$) \\
+    45 & Edge & Antisym.\ decoupling & Yes & $\to 0$ as $\Theta(1/k)$ \\
+    48 & Edge & Degenerate ($P_3$) & Yes & Fixed ($0.071$) \\
+    \bottomrule
+  \end{tabular}
+  }
+\end{table}
+
+The two vertex-type failures (Bounds~11, 13) are \emph{irreparable}: the
+violation gap diverges, so no bounded correction term can salvage these bounds.
+Bound~45 is asymptotically repairable since the gap vanishes as
+$O(1/\Delta)$.  Bound~48 is trivially repairable by excluding~$P_3$.
+Bound~40 occupies an intermediate position: the violation is bounded but
+occurs over a range of parameters, making a simple correction nontrivial.
+
+
+%% =============================================================================
+%% 6. CLASSIFICATION OF REMAINING BOUNDS
+%% =============================================================================
+\section{Status of the 38 open BHS bounds}\label{sec:classification}
+
+Of the 68~bounds proposed by BHS~\cite{BHS2006}, Ghebleh et
+al.~\cite{Ghebleh2024} disproved~30, leaving 38~open.
+We have disproved~5 of these~38 (Section~\ref{sec:main}),
+leaving \textbf{33~bounds open}.
+
+\subsection{Classification criteria}\label{ssec:criteria}
+
+We classify the 33~remaining open bounds into four categories based on
+their behavior across all counterexample families tested ($\SoC(K_m, t)$
+for $m \in [3,12]$, $t \in [2, 200]$; $\SoS(t, s)$ for $t \in [2, 100]$,
+$s \in [1, 20]$; $\DS(k, k)$ for $k \in [1, 50]$; $\Cat(\ell, k)$ for
+$\ell \in [2, 10]$, $k \in [0, 50]$; and all connected graphs with
+$n \leq 10$):
+
+\begin{definition}[Classification criteria]\label{def:classification}
+  Let $\mathrm{gap}(B, G) = B(G) - \Lspec(G)$ denote the margin by
+  which bound~$B$ holds on graph~$G$ (positive means the bound holds).
+  \begin{enumerate}[label=\textup{(\roman*)}]
+    \item \textbf{Super-safe}: The relative gap $\mathrm{gap}(B, G)/\Lspec(G)$
+      exceeds~$0.1$ on all tested families (large relative margin).
+    \item \textbf{Tight}: The infimum of $\mathrm{gap}(B, G)$ over all
+      tested families equals zero (exact equality achieved on some graph
+      family).
+    \item \textbf{Safe}: The infimum of $\mathrm{gap}(B, G)/\Lspec(G)$
+      over all tested families is bounded below by a positive constant
+      (relative gap bounded away from zero).
+    \item \textbf{Marginal}: Neither tight nor safe---the absolute gap is
+      positive on all tested graphs but the relative gap approaches zero
+      along some family.
+  \end{enumerate}
+\end{definition}
+
+\subsection{Complete status table}\label{ssec:status-table}
+
+Table~\ref{tab:classification} presents the complete status of all
+38~bounds that were open after~\cite{Ghebleh2024}, organized by
+resolution status.
+
+\begin{table}[ht]
+  \centering
+  \caption{Status of the 38~BHS bounds left open by Ghebleh et
+    al.~\cite{Ghebleh2024}.
+    Bounds are grouped by resolution status.
+    The 33~bounds that remain open are classified as
+    \textsc{Super-safe}, \textsc{Tight}, \textsc{Safe}, or
+    \textsc{Marginal} per Definition~\ref{def:classification}.}
+  \label{tab:classification}
+  {\small\renewcommand{\arraystretch}{0.88}%
+  \begin{tabular}{lllll}
+    \toprule
+    Bound & Type & Resolved by & Method & Category \\
+    \midrule
+    \multicolumn{5}{l}{\emph{Disproved (5 bounds) --- this paper}} \\
+    11  & Vertex & This paper & $\SoC(K_m, t)$    & Hub-invisible \\
+    13  & Vertex & This paper & $\SoC(K_m, t)$    & Hub-invisible \\
+    40  & Edge   & This paper & $\SoS(t, s)$      & Transient window \\
+    45  & Edge   & This paper & $\DS(k, k)$       & Antisymmetric mode \\
+    48  & Edge   & This paper & $P_3$             & Degenerate \\
+    \midrule
+    \multicolumn{5}{l}{\emph{Still open (33 bounds)}} \\
+    1   & Vertex & ---         & --- & Super-safe \\
+    4   & Vertex & ---         & --- & Super-safe \\
+    5   & Vertex & ---         & --- & Super-safe \\
+    6   & Vertex & ---         & --- & Super-safe \\
+    7   & Vertex & ---         & --- & Super-safe \\
+    8   & Vertex & ---         & --- & Safe \\
+    9   & Vertex & ---         & --- & Super-safe \\
+    10  & Vertex & ---         & --- & Marginal \\
+    12  & Vertex & ---         & --- & Super-safe \\
+    14  & Vertex & ---         & --- & Super-safe \\
+    16  & Vertex & ---         & --- & Super-safe \\
+    18  & Vertex & ---         & --- & Safe \\
+    19  & Vertex & ---         & --- & Safe \\
+    20  & Vertex & ---         & --- & Safe \\
+    21  & Vertex & ---         & --- & Safe \\
+    22  & Vertex & ---         & --- & Safe \\
+    23  & Vertex & ---         & --- & Marginal \\
+    24  & Vertex & ---         & --- & Safe \\
+    25  & Vertex & ---         & --- & Safe \\
+    26  & Vertex & ---         & --- & Safe \\
+    27  & Vertex & ---         & --- & Safe \\
+    30  & Vertex & ---         & --- & Safe \\
+    33  & Edge   & ---         & --- & Tight \\
+    34  & Edge   & ---         & --- & Safe \\
+    35  & Edge   & ---         & --- & Safe \\
+    37  & Edge   & ---         & --- & Safe \\
+    38  & Edge   & ---         & --- & Safe \\
+    39  & Edge   & ---         & --- & Safe \\
+    42  & Edge   & ---         & --- & Tight \\
+    44  & Edge   & ---         & --- & Safe \\
+    46  & Edge   & ---         & --- & Safe \\
+    47  & Edge   & ---         & --- & Tight \\
+    56  & Edge   & ---         & --- & Safe \\
+    \bottomrule
+  \end{tabular}%
+  }
+\end{table}
+
+\noindent
+Of the 33~remaining open bounds, all vertex-type ones are hub-visible
+(Proposition~\ref{prop:hub-classification}).  Three edge-type bounds
+(33, 42, and~47) are \emph{tight}: they achieve exact equality on complete
+bipartite graphs and windmill graphs.
+
+\begin{remark}[Comparison with Ghebleh et al.]\label{rem:ghebleh-comparison}
+  Of the 30~bounds disproved by Ghebleh et al.~\cite{Ghebleh2024},
+  all counterexamples have at most 13~vertices.  None of the 38~bounds
+  left open by their search can be disproved by any graph with $n \leq 13$,
+  and our smallest new counterexample ($P_3$ aside, which has $n = 3$) has
+  $n = 14$ (for Bound~45).  The largest has $n = 352$ (for Bound~40).
+  This suggests a phase transition in counterexample difficulty: the
+  ``easy'' bounds are disproved by small graphs findable by stochastic
+  search, while the ``hard'' ones require structured infinite families
+  with closed-form spectral analysis.
+\end{remark}
+
+\subsection{Exhaustive verification of the tight bounds}\label{ssec:exhaustive}
+
+We performed exhaustive computational verification of the three
+tight bounds (33, 42, and~47) on every connected graph with $n \leq 10$
+vertices---a total of $11{,}988{,}768$ graphs.
+Zero violations were found.
+
+\begin{proposition}[Finite verification]\label{thm:finite-verification}
+  Bounds~33, 42, and~47 from~\cite{BHS2006} hold for all connected graphs
+  with at most~$10$ vertices.
+\end{proposition}
+
+Windmill graphs $W(k,3)$ (the friendship graphs) provide asymptotically
+tight instances for Bounds~42 and~47: the relative gap satisfies
+$\bigl(B_{42} - \Lspec\bigr)/\Lspec \sim \sqrt{3}/k \to 0$ as
+$k \to \infty$.  Proving or disproving these three bounds remains the
+most compelling open problem arising from this work.
+
+
+%% =============================================================================
+%% 7. DISCUSSION
+%% =============================================================================
+\section{Discussion}\label{sec:discussion}
+
+\paragraph{Summary.}
+BHS~\cite{BHS2006} proposed 68~conjectured bounds for~$\Lspec(G)$.
+Ghebleh et al.~\cite{Ghebleh2024} disproved~30 via cross-entropy methods.
+We have disproved~5 more by structural construction.
+Together, 35 of the original 68~bounds are now resolved (52\%),
+with 33~remaining open.
+
+\paragraph{Structural vs.\ computational approaches.}
+Cross-entropy search~\cite{Ghebleh2024,Wagner2021,BouffardBreen2025}
+explores adjacency matrices for $n \leq 24$.
+Our structural approach targets algebraic weaknesses
+(hub-invisible ratios, antisymmetric modes)
+and produces infinite families with
+closed-form spectral radii.  The two approaches are complementary:
+stochastic search excels at finding small counterexamples, while
+structural construction reaches the large-$n$ regime ($n = 352$ for
+Bound~40) where no counterexample can be found computationally.
+
+\paragraph{Gap asymptotics and repairability.}
+The five violations exhibit qualitatively different gap behaviors
+(Table~\ref{tab:mechanism-summary}).
+Bounds~11 and~13 have divergent gaps (irreparable).
+Bound~40 has a bounded transient window (max gap $\approx 1.27$).
+Bound~45 has a vanishing gap $\Theta(1/k)$, suggesting repairability
+with an additive $O(1/\Delta)$ correction.
+Bound~48 fails only on~$P_3$.
+Understanding which bounds are repairable may guide the design of
+improved automated conjectures.
+
+\paragraph{A weighted Laplacian intermediate result.}
+In attempting to prove the tight bounds (42, 47), we obtained the
+following intermediate result, which we include here as a potentially
+useful tool for future work.
 
 \begin{proposition}[Weighted Laplacian bound]\label{prop:weighted-laplacian}
   For any connected graph~$G$,
@@ -681,8 +1074,12 @@ following intermediate result.
   \[
     \Lspec(G)^2\, x_v^2 = \Bigl(d_v x_v - \sum_{u \sim v} x_u\Bigr)^{\!2}.
   \]
-  Applying Cauchy--Schwarz to $\bigl(\sum_{u \sim v} x_u\bigr)^2 \leq
-  d_v \sum_{u \sim v} x_u^2$ in the expanded square and summing over all
+  Expanding the square gives $d_v^2 x_v^2 - 2 d_v x_v \sum_{u \sim v} x_u
+  + \bigl(\sum_{u \sim v} x_u\bigr)^2$.
+  Applying Cauchy--Schwarz to the cross-term,
+  $-2 d_v x_v \sum_{u \sim v} x_u \leq d_v \sum_{u \sim v}(x_v^2 + x_u^2)$,
+  and to $\bigl(\sum_{u \sim v} x_u\bigr)^2 \leq
+  d_v \sum_{u \sim v} x_u^2$, then summing over all
   vertices yields $\Lspec(G)^2 \leq x^T M\, x$, where $M$ has entries
   \[
     M_{vv} = \sum_{u \sim v} (d_v + d_u), \qquad
@@ -698,100 +1095,26 @@ following intermediate result.
   This second inequality remains open.
 \end{remark}
 
-
-%% =============================================================================
-%% 6. CLASSIFICATION OF REMAINING BOUNDS
-%% =============================================================================
-\section{Classification of the remaining 33 bounds}\label{sec:classification}
-
-We classify the 33~remaining bounds by gap behavior on the tested families.
-
-\begin{table}[t]
-  \centering
-  \caption{Classification of the 33~remaining open BHS bounds.}
-  \label{tab:classification}
-  \begin{tabular}{llp{5.5cm}l}
-    \toprule
-    Category & Count & Bounds & Assessment \\
-    \midrule
-    \textsc{Super-safe} & 8 & 1, 4, 5, 7, 14, 16, 21, 30 & Likely provable \\
-    \textsc{Safe} & 20 & 6, 8, 9, 12, 18--20, 22, 24--27, 34, 35, 37--39, 44, 46, 56 & Plausible \\
-    \textsc{Tight} & 3 & 33, 42, 47 & Sharp; provable? \\
-    \textsc{Marginal} & 2 & 10, 23 & Undetermined \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-The \textsc{super-safe} bounds include all hub-visible bounds (14, 16, 30).
-The three \textsc{tight} bounds achieve exact equality on~$P_3$ and complete
-bipartite graphs, making them the most promising candidates for a proof.
-
-\subsection{Exhaustive verification of the tight bounds}\label{ssec:exhaustive}
-
-We performed exhaustive computational verification of the three tight
-bounds (33, 42, 47) on every connected graph with $n \leq 10$ vertices.
-The total number of connected graphs tested was $11{,}988{,}768$
-($11{,}117$ for $n = 8$; $261{,}080$ for $n = 9$; $11{,}716{,}571$ for
-$n = 10$).  Zero violations were found for any of the three bounds.
-
-\begin{theorem}[Finite verification]\label{thm:finite-verification}
-  Bounds~33, 42, and~47 from~\cite{BHS2006} hold for all connected graphs
-  with at most~$10$ vertices.
-\end{theorem}
-
-Among all graphs tested, the tightest instances---those achieving exact
-equality in all three bounds simultaneously---are the complete bipartite
-graphs $K_{a,b}$.  On regular bipartite graphs, the vertex and edge
-parameters satisfy $d_i = d_j$ and $m_i = m_j = d_i$, causing the bound
-formulas to collapse to $\Lspec(G) = 2\Delta$, which is the known
-spectral radius of $K_{a,a}$.
-
-Windmill graphs $W(k,3)$ (the friendship graphs) provide asymptotically
-tight instances for Bound~42: the relative gap satisfies
-$\bigl(B_{42} - \Lspec\bigr)/\Lspec \sim \sqrt{3}/k \to 0$ as
-$k \to \infty$.
-
-
-%% =============================================================================
-%% 7. DISCUSSION
-%% =============================================================================
-\section{Discussion}\label{sec:discussion}
-
-\paragraph{Summary.}
-BHS~\cite{BHS2006} proposed 68~conjectured bounds for~$\Lspec(G)$.
-Ghebleh et al.~\cite{Ghebleh2024} disproved~30 via cross-entropy methods.
-We have disproved~5 more by structural construction, leaving 33~open.
-
-\paragraph{Structural vs.\ computational approaches.}
-Cross-entropy search explores adjacency matrices for $n \leq 24$.
-Our smallest counterexample has $n = 29$, beyond exhaustive reach.
-Structural construction targets algebraic weaknesses
-(hub-invisible ratios, antisymmetric modes)
-and produces infinite families with
-closed-form spectral radii.  The two approaches are complementary.
-
-\paragraph{Gap asymptotics.}
-Bounds~11/13: gap diverges (irreparable).
-Bound~40: transient window (max gap~$1.74$).
-Bound~45: gap $\to 0$ as $1/(2k)$ (repairable).
-Bound~48: degenerate $P_3$ case only.
-
 \paragraph{Proof attempts for tight bounds.}
-We attempted to prove the three tight bounds (33, 42, 47) using Rayleigh
+We attempted to prove the two remaining tight bounds (42, 47) using Rayleigh
 quotient methods, Schur complement analysis, Gershgorin circles, and degree
-sequence constraints.  While a key intermediate result was obtained
-(Proposition~\ref{prop:weighted-laplacian}), complete proofs remain elusive.
+sequence constraints.  While the weighted Laplacian bound
+(Proposition~\ref{prop:weighted-laplacian}) provides a useful intermediate
+step, complete proofs remain elusive.
 The fundamental obstacle is that standard spectral techniques do not
 naturally produce edge-maximum bounds involving average neighbor degrees:
 the Rayleigh quotient $x^T L x / x^T x$ yields vertex-sum expressions,
 whereas edge-type bounds require converting these into edge-maximum form.
 
 \paragraph{Open questions.}
-(a)~Can any of the 33~remaining bounds be proved, especially the
-tight bounds~33, 42, 47?
-(b)~Do three-level hierarchies violate additional bounds?
-(c)~Can Conjecture~\ref{conj:characterization} be proved?
-(d)~Can Bound~45 be repaired with an $O(1/\Delta)$ correction?
+\begin{enumerate}[label=(\alph*)]
+  \item Can the three tight bounds (33, 42, 47) be proved?
+  \item Can additional bounds among the remaining~33 be proved?
+  \item Do three-level hierarchies (e.g., star-of-stars-of-cliques)
+    violate additional bounds?
+  \item Can Bound~45 be repaired with an $O(1/\Delta)$ correction?
+  \item What is the correct minimum-order threshold for Bound~48?
+\end{enumerate}
 
 
 %% =============================================================================

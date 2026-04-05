@@ -17,17 +17,10 @@ V.~Brankov, P.~Hansen, D.~Stevanovi\'{c}, Automated conjectures on upper bounds
 \newblock \href {https://doi.org/10.1016/j.laa.2005.10.017}
   {\path{doi:10.1016/j.laa.2005.10.017}}.
 
-\bibitem{AutoGraphiX2000}
-G.~Caporossi, P.~Hansen, Variable neighborhood search for extremal graphs. 1.
-  {T}he {A}uto{G}raphi{X} system, Discrete Mathematics 212~(1--2) (2000)
-  29--44.
-\newblock \href {https://doi.org/10.1016/S0012-365X(99)00206-X}
-  {\path{doi:10.1016/S0012-365X(99)00206-X}}.
-
 \bibitem{Ghebleh2024}
 M.~Ghebleh, S.~Al-Yakoob, A.~Kanso, D.~Stevanovi\'{c}, Refuting conjectured
   upper bounds for the largest {L}aplacian eigenvalue of graphs, Discrete
-  Applied Mathematics 380, preprint: arXiv:2403.18429 (2024) (2026).
+  Applied Mathematics 380 (2026) 468--479, preprint: arXiv:2403.18429 (2024).
 \newblock \href {https://doi.org/10.1016/j.dam.2025.10.047}
   {\path{doi:10.1016/j.dam.2025.10.047}}.
 
@@ -39,10 +32,6 @@ A.~Z. Wagner, Constructions in combinatorics via neural networks, arXiv
 N.~Bouffard, J.~Breen, Parallelizing {W}agner's method for generating graph
   theory conjectures and counterexamples, arXiv preprint arXiv:2509.01607
   (2025).
-
-\bibitem{RoucairolCazenave2024}
-M.~Roucairol, T.~Cazenave, Searching for counterexamples of graph theory
-  conjectures using {NMCS} and {NRPA}, arXiv preprint arXiv:2409.18626 (2024).
 
 \bibitem{GodsilRoyle2001}
 C.~Godsil, G.~Royle, Algebraic Graph Theory, Vol. 207 of Graduate Texts in
